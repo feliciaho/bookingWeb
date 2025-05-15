@@ -1,0 +1,83 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+// navBar style
+.navbar
+  background: linear-gradient(0deg, #ffffffe1 15.05%, $bgColor 85.34%) !important
+  width: 100%
+  z-index: 11
+  flex-direction: row-reverse
+  padding: .5rem 1rem
+  font-family: "the-seasons", sans-serif
+  @include media-sptb
+    position: fixed
+    background: linear-gradient(0deg, #ffffffe1 15.05%, $bgColor 85.34%) !important
+  .navbarLogo
+    position: absolute
+    display: inline-block
+    top: 2rem
+    left: 1rem
+    font-size: clamp(1.2rem, 1.4vw, 2rem)
+    @include media-sptb
+      top: .5rem
+      left: .5rem
+    a
+      color: $mainColor1
+      display: flex
+      align-items: center
+      img
+        margin: 0 0.5rem
+        width: 35px
+  .searchWrap
+    border: 2px solid $lightgray
+    width: 20%
+    margin-right: -23%
+    @include media-sptb
+      position: unset
+      width: 100%
+      max-width: 400px
+      margin: auto
+    form
+      display: flex
+      flex-direction: row
+      .search
+        width: 100%
+        display: block
+        padding: 5px
+        font-size: 1rem
+        color: $darkgray
+      button
+        background-color: $mainColor1
+        padding: 5px
+  .navbar-collapse
+    justify-content: center
+    gap: 30px
+    transition: all 1s ease-in-out
+    @include media-sptb
+      flex-direction: column
+      gap: unset
+    .navbar-nav
+      justify-content: center
+      align-items: center
+      color: #000000e8
+      li
+        position: relative
+        padding: 1rem 1rem
+        @include media-sptb
+          font-size: 1rem
+        &:last-child
+          a
+            border: 0px
+        a
+          padding: 10px
+          color: $black
+          &:hover, &.active
+            border-bottom: 3px solid $mainColor1
+            color: $black
+            position: relative
+            img
+              filter: unset
+          img
+            width: 20px
+            margin: 0 0.5rem
+            filter: invert(0.5)
