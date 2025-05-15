@@ -1,31 +1,4 @@
 @use "../_foundation/color" as *
-
-// pagination
-.pagination
-  width: 100%
-  display: flex
-  justify-content: center
-  margin: 5vh 0
-  li
-    border: 2px solid $white
-    background-color: $black
-    transition: 0.3s all
-    border-radius: 50px
-    margin: 0 1px
-    &:hover, &.active
-      background-color: $white
-      border: 2px solid $blackOpacity
-      a
-        color: $black
-    &.disabled
-      pointer-events: none
-      opacity: 0.5
-    a
-      display: block
-      height: 100%
-      width: 100%
-      color: $white
-      padding: 10px 16px
 // footer
 footer
   border-top: 2px solid $blackOpacity
