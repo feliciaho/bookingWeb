@@ -1,0 +1,45 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.explore
+  // Feature Section
+  .feature
+    &:nth-child(2)
+      .feature
+        &_image
+          background: url('@/assets/images/swimmingPool.jpg') center center no-repeat
+          background-size: cover
+
+        &_content
+          background-color: $white
+          color: $text-light
+
+        &_title, &_text
+          color: $black
+
+    &:nth-child(3)
+      flex-direction: row-reverse
+      .feature
+        &_image
+          background: url('@/assets/images/kitchen.jpg') center center no-repeat
+          background-size: cover
+
+        &_content
+          background-color: $secondary-color
+          color: $secondary-color
+
+        &_title, &_text
+          color: $white
+
+    &:nth-child(4)
+      .feature
+        &_image
+          background: url('@/assets/images/diningArea.jpg') center center no-repeat
+          background-size: cover
+
+        &_content
+          background-color: $white
+          color: $text-light
+
+        &_title, &_text
+          color: $black

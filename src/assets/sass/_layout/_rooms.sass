@@ -1,0 +1,37 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+@use "../_foundation/common" as *
+
+// Rooms Section
+.rooms
+  padding: 3rem 0
+
+  &_header
+    padding: 0 3rem
+    text-align: center
+
+  &_subtitle
+    color: $secondary-color
+
+  &_title
+    color: $text-color
+
+  &_grid
+    display: flex
+    justify-content: center
+    gap: 2rem
+    padding: 0 2rem
+    flex-direction: row
+    margin-top: 5rem
+    @include media-sptb
+      flex-direction: column
+      align-items: center
+
+  &_list
+    display: flex
+    justify-content: center
+    gap: 2rem
+    padding: 0 2rem
+    margin-top: 5rem
+    flex-direction: column
+    align-items: center

@@ -1,0 +1,34 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+// Feature Section
+.feature
+  display: flex
+  min-height: 90vh
+  flex-direction: row
+  @include media-sptb
+    min-height: 110vh
+    flex-direction: column
+
+  &_image
+    width: 40%
+    @include media-sptb
+      width: 100%
+      min-height: 900px
+    @include media-narrow
+      min-height: 500px
+
+  &_content
+    width: 60%
+    padding: 3rem 6rem
+    display: flex
+    justify-content: center
+    flex-direction: column
+    @include media-sptb
+      width: 100%
+      padding: 3rem
+
+  &_button
+    background-color: $white
+    color: $text-light
+    margin: 2rem 0

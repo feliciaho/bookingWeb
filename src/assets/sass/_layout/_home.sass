@@ -1,64 +1,16 @@
 @use "../_foundation/media" as *
 @use "../_foundation/color" as *
 
-section
-  &.home, &.myFavorite
-    // homeRecips
-    .homeRecipsWrap
-      max-width: 1500px
-      width: 80%
-      display: flex
-      justify-content: flex-start
-      flex-wrap: wrap
-      gap: 1rem
-      .homeRecipes
-        width: calc((100% / 3) - 0.75rem)
-        display: flex
-        color: $mainColor1
-        justify-content: center
-        align-content: flex-start
-        flex-wrap: wrap
-        background-color: $bgColor-darken
-        border-radius: 20px
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1)
-        border: 2px solid $white
-        overflow: hidden
-        @include media-sptb
-          width: calc((100% / 2) - 0.5rem)
-        @include media-sp
-          width: 100%
-        // banner
-        .banner
-          width: 100%
-          max-height: 300px
-          position: relative
-          z-index: 2
-          overflow: hidden
-          &:hover
-            .mask
-              opacity: 1
-            img
-              transform: scale(1.1)
-          a
-            position: relative
-            z-index: 3
-            cursor: pointer
-            img
-              transition: .2s linear
-              object-fit: contain
-          .mask
-            z-index: 4
-            position: absolute
-            top: 0
-            left: 0
-            width: 100%
-            height: 100%
-            background: rgba(0, 0, 0, 0.7)
-            color: white
-            display: flex
-            justify-content: center
-            align-items: center
-            opacity: 0
-            transition: 0.3s linear
-            font-size: 24px
-            pointer-events: none
+.home
+  // Feature Section
+  .feature
+    &_image
+      background: url('@/assets/images/swimmingPool.jpg') center center no-repeat
+      background-size: cover
+
+    &_content
+      background-color: $secondary-color
+      color: $light-color
+
+    &_title, &_text
+      color: $white

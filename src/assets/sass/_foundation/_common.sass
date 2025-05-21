@@ -1,0 +1,44 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+section
+  position: relative
+  width: 100%
+  overflow-x: hidden
+
+.common-title
+  font-size: 64px
+  line-height: 4rem
+  margin-bottom: 1.5rem
+  font-family: 'Abril Fatface', cursive
+  color: $text-color
+  @include media-narrow
+    font-size: 48px
+    line-height: 4rem
+
+.common-text
+  font-size: 20px
+  line-height: 2rem
+  font-weight: 500
+  color: $text-color
+  @include media-narrow
+    font-size: 16px
+
+.common-subtitle
+  display: block
+  margin-bottom: 1rem
+  font-size: 18px
+
+.common-button
+  font-size: 18px
+  width: 180px
+  height: 50px
+  border: none
+  border-radius: 4px
+  cursor: pointer
+  transition: all 0.3s ease
+  filter: brightness(0.9)
+  &:hover
+    filter: brightness(1.2)
+
+

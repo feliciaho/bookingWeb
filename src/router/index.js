@@ -12,27 +12,27 @@ const router = createRouter({
       name: 'HomeView',
       component: () => import('../views/HomeView.vue'),
     },
-    // {
-    //   path: '/aboutView',
-    //   name: 'AboutView',
-    //   component: () => import('../views/AboutView.vue'),
-    // },
-    // {
-    //   path: '/exploreView',
-    //   name: 'ExploreView',
-    //   component: () => import('../views/ExploreView.vue'),
-    // },
-    // {
-    //   path: '/roomsView',
-    //   name: 'RoomsView',
-    //   component: () => import('../views/RoomsView.vue'),
-    // },
-    //新增404page 記得要在router也新增頁面
-    // {
-    //   path: '/:pathMatch(.*)*',
-    //   name: 'NotFound',
-    //   component: () => import('../views/NotFoundView.vue'),
-    // },
+    {
+      path: '/aboutView',
+      name: 'AboutView',
+      component: () => import('../views/AboutView.vue'),
+    },
+    {
+      path: '/exploreView',
+      name: 'ExploreView',
+      component: () => import('../views/ExploreView.vue'),
+    },
+    {
+      path: '/roomsView',
+      name: 'RoomsView',
+      component: () => import('../views/RoomsView.vue'),
+    },
+    // 新增404page 記得要在router也新增頁面
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: () => import('../views/NotFoundView.vue'),
+    },
   ],
   // 每換一次路由就回到最上面
   scrollBehavior() {

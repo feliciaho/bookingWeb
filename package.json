@@ -14,10 +14,12 @@
     "@tsparticles/vue3": "^3.0.1",
     "axios": "^1.8.4",
     "bootstrap": "^5.3.5",
+    "flatpickr": "^4.6.13",
     "pinia": "^3.0.1",
     "tsparticles": "^3.8.1",
     "vue": "^3.5.13",
     "vue-axios": "^3.5.2",
+    "vue-flatpickr-component": "^12.0.0",
     "vue-loading-overlay": "^6.0.6",
     "vue-router": "^4.5.0"
   },

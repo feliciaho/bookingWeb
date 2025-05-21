@@ -1,9 +1,11 @@
 <script>
 //app.vue
 import { RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
-import FooterCom from './components/FooterCom.vue';
+import NavBar from '@/components/NavBar.vue'
+import FooterCom from '@/components/FooterCom.vue';
+
 export default {
+  name: 'App',
   components: {
     NavBar,
     FooterCom,
@@ -13,9 +15,9 @@ export default {
 </script>
 
 <template>
-  <body>
-    <NavBar></NavBar>
-    <RouterView></RouterView>
-    <FooterCom></FooterCom>
-  </body>
+  <div id="app">
+    <NavBar/>
+    <router-view/>
+    <FooterCom/>
+  </div>
 </template>

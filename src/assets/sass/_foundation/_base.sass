@@ -1,3 +1,5 @@
+@use "../_foundation/color" as *
+
 /* Reset css */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -15,7 +17,7 @@ time, mark, audio, video
   margin: 0
   padding: 0
   border: 0
-  font-size: 100%
+  // font-size: 100%
   font: inherit
   vertical-align: middle
 
@@ -24,13 +26,27 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section
   display: block
 
+html
+  font-size: 16px
+
 body
   position: relative
   overflow-x: hidden
+  font-family: 'Outfit', sans-serif
+  font-weight: 300
+  line-height: 1.5
+  color: $text-color
   &::-webkit-scrollbar
     width: 5px
   &::-webkit-scrollbar-track
     background: #434343
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'Abril Fatface', cursive
+  font-weight: 400
+
+p, span, a, button, input, textarea, select
+  font-family: 'Outfit', sans-serif
 
 ol, ul, button
   margin: 0
@@ -63,6 +79,14 @@ button, a
   outline: none
   border: none
   text-decoration: none
+  cursor: pointer
+
 img
   max-width: 100%
   height: auto
+
+.container
+  // max-width: 1200px
+  margin: 0 auto
+  padding: 0 1rem
+

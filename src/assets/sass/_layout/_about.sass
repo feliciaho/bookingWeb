@@ -1,0 +1,17 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+@use "../_foundation/common" as *
+
+.about
+  // Feature Section
+  .feature
+    &_image
+      background: url('@/assets/images/about.jpg') center center no-repeat
+      background-size: cover
+
+    &_content
+      background-color: $white
+      color: $secondary-color
+
+    &_title, &_text
+      color: $black
