@@ -19,6 +19,8 @@
 
     &:nth-child(3)
       flex-direction: row-reverse
+      @include media-sptb
+        flex-direction: column
       .feature
         &_image
           background: url('@/assets/images/kitchen.jpg') center center no-repeat
@@ -26,7 +28,7 @@
 
         &_content
           background-color: $secondary-color
-          color: $secondary-color
+          color: $white
 
         &_title, &_text
           color: $white

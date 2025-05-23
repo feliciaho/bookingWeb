@@ -1,7 +1,20 @@
 # Options API
 <script>
 export default {
-  name: 'NavBar'
+  name: 'NavBar',
+  data() {
+    return {
+      menuOpen: false,
+    }
+  },
+  methods: {
+    toogleMenu() {
+      this.menuOpen = !this.menuOpen;
+    },
+    closeMenu() {
+      this.menuOpen = false;
+    }
+  },
 }
 </script>
 
@@ -14,21 +27,34 @@ export default {
           <h1>Felicia Ho's Homestay</h1>
         </div>
       </RouterLink>
-      <ul class="nav_menu">
+      <div class="nav_hamburger" @click="toogleMenu" aria-label="menu">
+        <span :class="{ open: menuOpen }"></span>
+        <span :class="{ open: menuOpen }"></span>
+        <span :class="{ open: menuOpen }"></span>
+      </div>
+      <ul class="nav_menu" :class="{ open: menuOpen }">
         <li>
-          <RouterLink to="/homeView">Home</RouterLink>
+          <RouterLink to="/homeView" @click="closeMenu">Home</RouterLink>
         </li>
         <li>
-          <RouterLink to="/aboutView">About</RouterLink>
+          <RouterLink to="/aboutView" @click="closeMenu">About</RouterLink>
         </li>
         <li>
-          <RouterLink to="/exploreView">Explore</RouterLink>
+          <RouterLink to="/exploreView" @click="closeMenu">Explore</RouterLink>
         </li>
         <li>
-          <RouterLink to="/roomsView">Rooms</RouterLink>
+          <RouterLink to="/roomsView" @click="closeMenu">Rooms</RouterLink>
         </li>
-        <!-- <li><a href="#"><img src="@/assets/images/icon/account.png"></a></li> -->
-        <!-- <li><a href="#"><img src="@/assets/images/icon/cart.png"></a></li> -->
+        <li>
+          <RouterLink to="/cartStep1" @click="closeMenu">
+            <img src="@/assets/images/icon/cart.png" alt="cart">
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/loginView" @click="closeMenu">
+            <img src="@/assets/images/icon/account.png" alt="user">
+          </RouterLink>
+        </li>
       </ul>
     </div>
   </nav>

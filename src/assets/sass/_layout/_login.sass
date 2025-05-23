@@ -1,0 +1,53 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.login
+  display: flex
+  justify-content: center
+  align-items: center
+  min-height: 90vh
+  background: url('@/assets/images/hero.jpg') no-repeat center center
+  padding: 1.5rem
+  background-size: cover
+  &::before
+    content: ''
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: $blackOpacity
+    z-index: 1
+    pointer-events: none
+
+.login
+
+  &-form
+    z-index: 2
+    position: relative
+    max-width: 300px
+    width: 100%
+    text-align: center
+
+    &_area
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+      gap: 1rem
+
+    &_input
+      width: 100%
+      padding: 10px
+      box-sizing: border-box
+      border: 1px solid $gray
+      border-radius: 5px
+
+    &_button
+      background-color: $primary-color
+      color: $white
+      border: none
+      font-size: 16px
+      width: 100%
+      height: unset
+      padding: 10px

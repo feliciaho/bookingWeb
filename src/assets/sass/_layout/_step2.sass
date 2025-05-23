@@ -1,0 +1,48 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.cart-step_2
+  display: flex
+  justify-content: center
+  min-height: 100vh
+  padding: 1.5rem
+
+.booking
+
+  &-form
+    max-width: 800px
+    width: 100%
+    text-align: center
+
+    &_area
+      display: flex
+      flex-direction: column
+      gap: 1rem
+
+    &_group
+      display: flex
+      flex-direction: column
+      text-align: left
+      &-button
+        justify-content: flex-end
+        display: flex
+
+    &_label
+      font-weight: bold
+      margin-bottom: .5rem
+
+    &_input, &_select, &_textarea
+      width: 100%
+      padding: 10px
+      box-sizing: border-box
+      border: 1px solid $gray
+      border-radius: 5px
+
+    &_textarea
+      height: 100px
+
+    &_button
+      background-color: $bg-red
+      color: $white
+      border: none
+      font-size: 16px

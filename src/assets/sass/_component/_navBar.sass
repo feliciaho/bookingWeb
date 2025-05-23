@@ -1,3 +1,4 @@
+@use "../_foundation/media" as *
 @use "../_foundation/color" as *
 
 .nav
@@ -8,21 +9,64 @@
   top: 0
   z-index: 1000
   overflow-x: hidden
+  box-sizing: border-box
+  @include media-sp
+    padding: .5rem 1rem
 
   &_content
     display: flex
-    // justify-content: space-between
+    justify-content: space-between
     align-items: center
 
   &_logo
     display: flex
     align-items: center
+    flex-wrap: nowrap
     gap: 0.5rem
+
+    img
+      width: 24px
+      height: 24px
+      @include media-sp
+        width: 18px
+        height: 18px
     h1
       font-family: 'Abril Fatface', cursive
       color: $light-color
       font-size: 24px
       letter-spacing: 1.44px
+      white-space: nowrap
+      @include media-sp
+        font-size: 18px
+
+  &_hamburger
+    display: none
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    background: none
+    border: none
+    cursor: pointer
+    z-index: 1101
+    @include  media-sp
+      display: flex
+
+    span
+      display: block
+      width: 30px
+      height: 3px
+      margin: 3px 0
+      background: $light-color
+      border-radius: 2px
+      transition: 0.3s
+
+    // 漢堡動畫
+    & span.open:nth-child(1)
+      transform: translateY(9px) rotate(45deg)
+    & span.open:nth-child(2)
+      opacity: 0
+    & span.open:nth-child(3)
+      transform: translateY(-9px) rotate(-45deg)
 
   &_menu
     display: flex
@@ -30,13 +74,39 @@
     list-style: none
     gap: 2rem
 
+    @include media-sp
+      position: fixed
+      z-index: 1100
+      top: 0
+      right: 0
+      height: 100vh
+      background: #46572ad2
+      flex-direction: column
+      align-items: flex-start
+      padding: 2rem
+      gap: .5rem
+      transform: translateX(100%)
+      transition: transform 0.3s
+      z-index: 1100
+      box-shadow: -2px 0 12px rgba(0, 0, 0, 0.08)
+      margin-top: 2.7rem
+      li
+        width: 100%
+        a
+          width: 100%
+          display: block
+          padding: 0.5rem 0
+
+      &.open
+        transform: translateX(0)
+
     li
       a
         font-family: 'Outfit', sans-serif
         color: white
         font-size: 16px
         transition: opacity 0.3s ease
-        opacity: 0.9
+        opacity: 0.8
 
         &:hover, &.active
           font-weight: 500

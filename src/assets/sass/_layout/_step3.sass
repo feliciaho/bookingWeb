@@ -1,0 +1,54 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.cart-step_3
+  display: flex
+  justify-content: center
+  min-height: 100vh
+  padding: 1.5rem
+
+.booking-complete
+
+  &_area
+    background-color: white
+    max-width:800px
+    min-width: 600px
+    width: 100%
+    text-align: center
+    border: 1px solid $lightgray
+    box-sizing: border-box
+    margin: 3rem auto
+    padding: 1rem
+    padding-top: unset
+    @include media-sp
+      min-width: unset
+
+  &_title
+    font-size: 32px
+    line-height: 4rem
+    border-bottom: 1px solid $lightgray
+    margin: unset
+    padding: .5rem
+
+  ul
+    font-family: 'Outfit', sans-serif
+    font-size: 18px
+    color: $text-light
+    font-weight: 300
+    list-style: disc
+    text-align: left
+    line-height: 2rem
+    padding-top: .5rem
+
+
+    li
+      font-size: 16px
+      margin: 0rem 2rem
+
+      img
+        width: 16px
+        height: 16px
+        margin-right: .5rem
+
+      &.red
+        color: $bg-red

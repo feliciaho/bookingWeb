@@ -6,6 +6,8 @@
   display: flex
   min-height: 90vh
   flex-direction: row
+  width: 100%
+  box-sizing: border-box
   @include media-sptb
     min-height: 110vh
     flex-direction: column
@@ -15,6 +17,7 @@
     @include media-sptb
       width: 100%
       min-height: 900px
+      box-sizing: border-box
     @include media-narrow
       min-height: 500px
 
@@ -27,6 +30,7 @@
     @include media-sptb
       width: 100%
       padding: 3rem
+      box-sizing: border-box
 
   &_button
     background-color: $white

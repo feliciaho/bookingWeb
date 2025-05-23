@@ -7,6 +7,8 @@ export default {
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
   <main class="notFound">
-    <div class="common-title"> 404 Not Found </div>
+    <section class="notFound_text">
+      <div class="common-title"> 404 Not Found </div>
+    </section>
   </main>
 </template>

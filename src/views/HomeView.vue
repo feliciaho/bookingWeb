@@ -19,6 +19,9 @@ export default {
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
   },
+  created(){
+    console.log(import.meta.env.VITE_APP_API,import.meta.env.VITE_APP_PATH );
+  },
 }
 </script>
 
@@ -26,22 +29,15 @@ export default {
   <LoadingOverlay :active="isloading"></LoadingOverlay>
   <main class="home">
     <!-- Hero Section -->
-    <HeroCom
-      title="Discover the Enchanting Bali Retreat"
-      text="Immerse yourself in the serene ambiance of our Bali-inspired retreat, where natural textures, tropical elements, and a focus on simplicity and elegance create an unparalleled experience"
-    />
+    <HeroCom title="Discover the Enchanting Bali Retreat"
+      text="Immerse yourself in the serene ambiance of our Bali-inspired retreat, where natural textures, tropical elements, and a focus on simplicity and elegance create an unparalleled experience" />
     <!-- Quick Booking Section -->
-    <QuickBooking/>
+    <QuickBooking />
     <!-- Feature Section -->
-     <FeatureCom
-      title="Discover Unmatched Luxury"
-      subtitle="Embrace the Bali Lifestyle"
-      text="Elevate your getaway with our Bali-inspired resort, where every detail is carefully
+    <FeatureCom title="Discover Unmatched Luxury" subtitle="Embrace the Bali Lifestyle" text="Elevate your getaway with our Bali-inspired resort, where every detail is carefully
           curated to provide an unparalleled experience. Immerse yourself in the tranquility of our secluded haven,
-          surrounded by lush greenery, natural textures, and the gentle whispers of the ocean"
-      :button="true"
-     />
+          surrounded by lush greenery, natural textures, and the gentle whispers of the ocean" :button="true" />
     <!-- Rooms Section -->
-    <RoomCard/>
+    <RoomCard />
   </main>
 </template>

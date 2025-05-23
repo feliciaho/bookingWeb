@@ -9,11 +9,17 @@
   &_form
     display: flex
     justify-content: center
-    align-items: center
+    align-items: flex-end
     flex-direction: row
-    gap: 4rem
-    @include media-sptb
-      gap: 2rem
+    gap: 3rem
+    @include media-pcWide
+      gap: 1rem
+      flex-wrap: wrap
+
+    &-room
+      display: flex
+      gap: 1rem
+      margin: 1rem 0rem
       flex-wrap: wrap
 
   &_group

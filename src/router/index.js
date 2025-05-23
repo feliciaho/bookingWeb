@@ -27,6 +27,26 @@ const router = createRouter({
       name: 'RoomsView',
       component: () => import('../views/RoomsView.vue'),
     },
+    {
+      path: '/cartStep1',
+      name: 'CartStep1',
+      component: () => import('../views/CartStep1.vue'),
+    },
+    {
+      path: '/cartStep2',
+      name: 'CartStep2',
+      component: () => import('../views/CartStep2.vue'),
+    },
+    {
+      path: '/cartStep3',
+      name: 'CartStep3',
+      component: () => import('../views/CartStep3.vue'),
+    },
+    {
+      path: '/loginView',
+      name: 'LoginView',
+      component: () => import('../views/LoginView.vue'),
+    },
     // 新增404page 記得要在router也新增頁面
     {
       path: '/:pathMatch(.*)*',

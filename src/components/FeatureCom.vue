@@ -19,7 +19,10 @@ export default {
       <span class="feature_subtitle common-subtitle">{{ subtitle }}</span>
       <h2 class="feature_title common-title">{{ title }}</h2>
       <p class="feature_text common-text" v-html="text"></p>
-      <button class="feature_button common-button" v-if="button">Explore</button>
+      <button class="feature_button common-button" v-if="button">
+        <RouterLink to="/exploreView"></RouterLink>
+        Explore
+      </button>
     </div>
   </section>
 </template>

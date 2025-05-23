@@ -1,6 +1,40 @@
 <script>
 export default {
   name: 'RoomCard',
+  data() {
+    return {
+      rooms: [
+        {
+          image: 'mountain',
+          title: 'Mountain View Room',
+          description: 'Embrace the Serenity of the Mountains',
+          bedroom: 1,
+          guests: 2,
+          area: '214m2',
+          price: 10.00,
+        },
+        {
+          image: 'pool',
+          title: 'Pool View Room',
+          description: 'Soak in the Breathtaking Pool Views',
+          bedroom: 1,
+          guests: 2,
+          area: '220m2',
+          bathroom: 1,
+          price: 12.00,
+        },
+        {
+          image: 'tropics',
+          title: 'Tropics Forest Room',
+          description: 'Bask in the Charm of the Tropics',
+          bedroom: 1,
+          guests: 2,
+          area: '210m2',
+          price: 8.00,
+        },
+      ],
+    }
+  },
 }
 
 </script>
@@ -12,58 +46,27 @@ export default {
     </div>
     <div class="rooms_grid">
       <!-- Mountain View Room -->
-      <div class="room-card">
-        <div class="room-card_image room-card_image--mountain"></div>
+      <div class="room-card" v-for="(room, index) in rooms" :key="index">
+        <div :class= "`room-card_image room-card_image-${ room.image }`"></div>
         <div class="room-card_content">
-          <h3 class="room-card_title">Mountain View Room</h3>
-          <p class="room-card_description">Embrace the Serenity of the Mountains</p>
+          <h3 class="room-card_title">{{ room.title }}</h3>
+          <p class="room-card_description">{{ room.description }}</p>
           <div class="room-card_info">
             <span>
               <img src="@/assets/images/icon/bed.png">
-              1 bedroom
+              {{ room.bedroom }} bedroom
             </span>
             <span>
               <img src="@/assets/images/icon/area.png">
-              214m2
+              {{ room.area }}
             </span>
           </div>
           <div class="room-card_price">
-            <span class="price">$ 10.00</span>
-            <span class="currency">USD</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pool View Room -->
-      <div class="room-card">
-        <div class="room-card_image room-card_image--pool"></div>
-        <div class="room-card_content">
-          <h3 class="room-card_title">Pool View Room</h3>
-          <p class="room-card_description">Soak in the Breathtaking Pool Views</p>
-          <div class="room-card_info">
-            <span><img src="@/assets/images/icon/bed.png">1 bedroom</span>
-            <span><img src="@/assets/images/icon/area.png">220m2</span>
-          </div>
-          <div class="room-card_price">
-            <span class="price">$ 12.00</span>
-            <span class="currency">USD</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tropics Forest Room -->
-      <div class="room-card">
-        <div class="room-card_image room-card_image--tropics"></div>
-        <div class="room-card_content">
-          <h3 class="room-card_title">Tropics Forest Room</h3>
-          <p class="room-card_description">Bask in the Charm of the Tropics</p>
-          <div class="room-card_info">
-            <span><img src="@/assets/images/icon/bed.png">1 bedroom</span>
-            <span><img src="@/assets/images/icon/area.png">210m2</span>
-          </div>
-          <div class="room-card_price">
-            <span class="price">$ 8.00</span>
-            <span class="currency">USD</span>
+            <div class="room-card_price-night">
+              <span class="price">$ {{ room.price }}.00</span>
+              <span class="currency">USD</span>
+            </div>
+            <span class="pernight">price/per night</span>
           </div>
         </div>
       </div>
