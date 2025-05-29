@@ -8,13 +8,27 @@ export default {
     }
   }),
   methods: {
+    // 驗證使用者登入狀態
     async login() {
       try {
         const api = `${import.meta.env.VITE_APP_API}admin/signin`
         const res = await this.axios.post(api, this.user)
-        console.log('Login successful', res)
+        if (res.data.success === true) {
+          console.log('Login successful');
+          const { token, expired } = res.data;
+          document.cookie = `hexToken =${token}; expires=${new Date(expired)}`;
+          // 驗證正確跳轉後台畫面
+          this.$router.push('/dashBoard');
+        } else {
+          console.error( 'Login failed:', res.data.message);
+          // 如果登入失敗，則清空使用者資料
+          this.user.username = '';
+          this.user.password = '';
+          // 顯示錯誤訊息
+          document.querySelectorAll('.login-form_error').style.display ='block';
+        }
       } catch (error) {
-        console.error('Login failed', error)
+        console.error('Login function failed: ', error)
       }
     }
   }
@@ -33,6 +47,7 @@ export default {
         <button type="submit" class="login-form_button common-button">
           Login
         </button>
+        <p class="login-form_error">email or password error</p>
       </form>
     </section>
   </main>

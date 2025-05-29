@@ -1,0 +1,79 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.room-table
+  max-width: 1000px
+  min-height: 100vh
+  margin: 0 auto
+  padding: 1.5rem
+  display: flex
+  flex-direction: column
+  align-items: center
+
+  &_area
+    width: 100%
+    border-collapse: collapse
+    text-align: left
+
+  &_header
+    width: 15%
+    color: $white
+    padding: .75rem 3rem
+    background-color: $deepgray
+    border-bottom: 2px solid $black
+    text-align: center
+    @include media-sp
+      padding: 0.75rem
+
+  &_cell
+    width: 16%
+    padding: 0.75rem 2rem
+    border-bottom: 1px solid $lightgray
+    vertical-align: middle
+    text-align: center
+    @include media-sp
+      padding: 0.75rem
+
+  &_status
+
+    &-abled
+      color: $text-red
+
+    &-enabled
+      color: $secondary-color
+
+  &_btn
+
+    &-edit
+      background-color: #3498db
+      color: #fff
+      padding: 0.25rem 0.75rem
+      border-radius: 4px
+      cursor: pointer
+      margin: 0.2rem
+
+    &-delete
+      background-color: $bg-red
+      color: #fff
+      padding: 0.25rem 0.75rem
+      border-radius: 4px
+      cursor: pointer
+      margin: 0.2rem
+
+    &-add
+      position: absolute
+      top: 5rem
+      right: 3rem
+      background-color: $secondary-color
+      color: #fff
+      padding: 0.25rem 0.75rem
+      border-radius: 4px
+      cursor: pointer
+      margin: 0.5rem
+      @include media-sp
+        top: 1rem
+        right: 1rem
+      @include media-narrow
+        position: relative
+        top: 0
+        right: 0

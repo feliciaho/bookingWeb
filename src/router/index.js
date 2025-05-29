@@ -28,19 +28,27 @@ const router = createRouter({
       component: () => import('../views/RoomsView.vue'),
     },
     {
-      path: '/cartStep1',
-      name: 'CartStep1',
-      component: () => import('../views/CartStep1.vue'),
+      path: '/cart',
+      name: 'Cart',
+      children: [
+        {
+          path: 'step1',
+          component: () => import('../views/CartStep1.vue'),
+        },
+        {
+          path: 'step2',
+          component: () => import('../views/CartStep2.vue'),
+        },
+        {
+          path: 'step3',
+          component: () => import('../views/CartStep3.vue'),
+        },
+      ],
     },
     {
-      path: '/cartStep2',
-      name: 'CartStep2',
-      component: () => import('../views/CartStep2.vue'),
-    },
-    {
-      path: '/cartStep3',
-      name: 'CartStep3',
-      component: () => import('../views/CartStep3.vue'),
+      path: '/dashBoard',
+      name: 'DashBoard',
+      component: () => import('../views/DashBoard.vue'),
     },
     {
       path: '/loginView',

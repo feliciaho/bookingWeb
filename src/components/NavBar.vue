@@ -46,7 +46,7 @@ export default {
           <RouterLink to="/roomsView" @click="closeMenu">Rooms</RouterLink>
         </li>
         <li>
-          <RouterLink to="/cartStep1" @click="closeMenu">
+          <RouterLink to="/cart/step1" @click="closeMenu">
             <img src="@/assets/images/icon/cart.png" alt="cart">
           </RouterLink>
         </li>

@@ -1,0 +1,40 @@
+@use "../_foundation/media" as *
+@use "../_foundation/color" as *
+
+.modal
+  position: fixed
+  top: 0
+  left: 0
+  width: 100vw
+  height: 100vh
+  z-index: 10000
+  display: flex
+  align-items: center
+  justify-content: center
+
+  &-overlay
+    position: fixed
+    top: 0
+    left: 0
+    width: 100vw
+    height: 100vh
+    background-color: rgba(0, 0, 0, .5)
+    z-index: 10000
+
+  &-area
+    position: relative
+    max-width: 1200px
+    width: 90vw
+    background: $white
+    border-radius: 1rem
+    z-index: 10001
+    padding: 2rem
+    display: flex
+    flex-direction: column
+
+  &-close
+    position: absolute
+    top: 1rem
+    right: 1rem
+    cursor: pointer
+    font-size: 1.5rem

@@ -2,13 +2,13 @@
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
 
-
 export default {
   name: 'CartStep2',
   components: {
     BookingStep,
     RoomList,
   },
+  
 }
 </script>
 <template>
@@ -51,7 +51,7 @@ export default {
           </div>
           <div class="booking-summary_button-area">
             <button type="button" class="booking-summary_button common-button">
-              <RouterLink to="/cartStep2">
+              <RouterLink to="/cart/step2">
               </RouterLink>
                 Next Step
             </button>

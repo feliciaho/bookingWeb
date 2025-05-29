@@ -40,7 +40,7 @@ export default {
         </div>
         <div class="booking-form_group-button">
           <button type="submit" class="booking-form_button common-button">
-            <RouterLink to="/cartStep3">
+            <RouterLink to="/cart/step3">
             </RouterLink>
             Proceed to Payment
           </button>

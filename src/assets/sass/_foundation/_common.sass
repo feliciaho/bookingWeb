@@ -2,11 +2,13 @@
 @use "../_foundation/color" as *
 
 main
-  margin-top: 2.5rem
+  margin-top: 4rem
+  @include media-sp
+    margin-top: 2.5rem
 
 section
   position: relative
-  overflow-x: hidden
+  // overflow-x: hidden
 
 .common-title
   font-size: 64px
