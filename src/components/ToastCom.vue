@@ -6,7 +6,7 @@ export default {
   data: () => ({
   }),
   computed: {
-    ...mapState(dashboard, ['toastToogleSet', 'toastTitle', 'toastContent']),
+    ...mapState(dashboard, ['toastToogleSet', 'toastTitle', 'toastContent', 'toastSuccess']),
   },
   methods: {
   },
@@ -15,8 +15,12 @@ export default {
 
 <template>
   <div class="toast-message" v-if="this.toastToogleSet">
-    <div class="toast-message_icon-success" v-if="this.toastSuccess"></div>
-    <div class="toast-message_icon-fail" v-if="!this.toastSuccess"></div>
+    <div class="toast-message_icon-success" v-if="this.toastSuccess">
+      <img src="../assets/images/icon/check.png">
+    </div>
+    <div class="toast-message_icon-fail" v-if="!this.toastSuccess">
+      <img src="../assets/images/icon/remove.png">
+    </div>
     <div class="toast-message_title">
       {{ this.toastTitle }}
     </div>

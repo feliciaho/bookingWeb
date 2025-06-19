@@ -7,18 +7,18 @@ export default defineStore('dashboard', {
     roomData: {},
     tempRoomData: {},
     newRoom: false,
-    toastTitle: 'Update Success',
+    toastTitle: 'Update',
     toastContent: '15165',
-    toastSuccesss: true,
-    toastToogleSet: true,
+    toastSuccess: false,
+    toastToogleSet: false,
   }),
   actions: {
-    // 吐司
+    // 吐司訊息
     toastShow() {
       this.toastToogleSet = true
       setTimeout(() => {
         this.toastToogleSet = false
-      }, 5000)
+      }, 3000)
     },
     // 取得房間資料
     async getRooms() {
@@ -52,13 +52,13 @@ export default defineStore('dashboard', {
           this.getRooms()
           this.toastTitle = 'Update Success'
           this.toastContent = ''
-          this.toastSuccesss = true
+          this.toastSuccess = true
           this.toastShow()
         } else {
           console.log('Error update room')
           this.toastTitle = 'Update Failed'
-          this.toastContent = res.data.message
-          this.toastSuccesss = false
+          this.toastContent = res.data.message.join('、')
+          this.toastSuccess = false
           this.toastShow()
         }
       } catch (error) {
@@ -74,8 +74,16 @@ export default defineStore('dashboard', {
           console.log('Successful delete room')
           // 重新取得房間資料
           this.getRooms()
+          this.toastTitle = 'Delete Success'
+          this.toastContent = ''
+          this.toastSuccess = true
+          this.toastShow()
         } else {
           console.log('Error delete room')
+          this.toastTitle = 'Delete Failed'
+          this.toastContent = ''
+          this.toastSuccess = false
+          this.toastShow()
         }
       } catch (error) {
         console.log('Error delete function', error)
@@ -96,8 +104,16 @@ export default defineStore('dashboard', {
           console.log('Successful upload img')
           // 將圖片連結更換成新上傳的圖片
           this.tempRoomData.imageUrl = res.data.imageUrl
+          this.toastTitle = 'Update Success'
+          this.toastContent = ''
+          this.toastSuccess = true
+          this.toastShow()
         } else {
           console.log('Error upload img')
+          this.toastTitle = 'Update Failed'
+          this.toastContent = res.data.message.join('、')
+          this.toastSuccess = false
+          this.toastShow()
         }
       } catch (error) {
         console.log('Error upload img function', error)
