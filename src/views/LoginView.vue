@@ -25,7 +25,7 @@ export default {
           this.user.username = '';
           this.user.password = '';
           // 顯示錯誤訊息
-          document.querySelectorAll('.login-form_error').style.display ='block';
+          document.querySelector('.login-form_error').style.display ='block';
         }
       } catch (error) {
         console.error('Login function failed: ', error)
