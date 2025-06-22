@@ -15,15 +15,15 @@ export default defineStore('toastStore', {
       }, 3000)
     },
     toastSuccess(title, content) {
+      this.toastSuccessSet = true
       this.toastTitle = title
       this.toastContent = content
-      this.toastSuccessSet = true
       this.toastShow()
     },
     toastFailed(title, content) {
+      this.toastSuccessSet = false
       this.toastTitle = title
       this.toastContent = content
-      this.toastSuccessSet = false
       this.toastShow()
     }
   }

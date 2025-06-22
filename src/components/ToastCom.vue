@@ -6,7 +6,7 @@ export default {
   data: () => ({
   }),
   computed: {
-    ...mapState(toastStore, ['toastTitle', 'toastContent', 'toastSuccess', 'toastToggleSet']),
+    ...mapState(toastStore, ['toastTitle', 'toastContent', 'toastSuccessSet', 'toastToggleSet']),
   },
 }
 </script>
