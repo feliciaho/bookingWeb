@@ -1,32 +1,30 @@
 <script>
 import { mapActions, mapState, mapWritableState } from 'pinia';
-import modalToogle from '@/stores/modalToogle';
+import modalToggle from '@/stores/modalToggle';
 import dashboard from '@/stores/dashboard';
+import loadingStore from '@/stores/loadingStore';
 
 export default {
   data: () => ({
   }),
   computed: {
-    ...mapState(modalToogle, ['modalToogleSet']),
+    ...mapState(loadingStore, ['isloading']),
+    ...mapState(modalToggle, ['modalToggleSet']),
     ...mapWritableState(dashboard, ['tempRoomData'])
   },
   methods: {
-    ...mapActions(modalToogle, ['showModal', 'closeModal']),
+    ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
+    ...mapActions(modalToggle, ['showModal', 'closeModal']),
     ...mapActions(dashboard, ['updateRoom', 'uploadFile']),
-    // 更新房間後關閉Modal
-    async submitFunc(){
-      await this.updateRoom();
-      this.closeModal();
-    }
   },
 }
 </script>
 
 <template>
-  <div class="modal" v-if="modalToogleSet == true">
+  <LoadingOverlay :active="isloading"></LoadingOverlay>
+  <div class="modal" v-if="modalToggleSet == true">
     <!-- overlay -->
-    <div class="modal-overlay" @click="closeModal"></div>
-
+    <div class="modal-overlay"></div>
     <!-- modal -->
     <div class="modal-area">
       <button class="modal-close" @click="closeModal">x</button>
@@ -38,27 +36,36 @@ export default {
           <div class="modal-form_row">
             <div class="modal-form_group">
               <label class="modal-form_label">Title</label>
-              <input type="text" class="modal-form_input" placeholder="Enter room title" v-model="tempRoomData.title"/>
+              <input type="text" class="modal-form_input" placeholder="Enter room title" v-model="tempRoomData.title" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Category</label>
-              <input type="text" class="modal-form_input" placeholder="Enter category" v-model="tempRoomData.category"/>
+              <input type="text" class="modal-form_input" placeholder="Enter category"
+                v-model="tempRoomData.category" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Unit</label>
-              <input type="text" class="modal-form_input" placeholder="Enter unit"  v-model="tempRoomData.unit"/>
+              <input type="text" class="modal-form_input" placeholder="Enter unit" v-model="tempRoomData.unit" />
             </div>
           </div>
 
           <!-- Row 2 -->
           <div class="modal-form_row">
+            <div class="modal-form_group-checkbox">
+              <input class="modal-form_label" type="checkbox" v-model="tempRoomData.is_enabled" :true-value="1"
+                :false-value="0" id="is_enabled"/>
+              <label class="modal-form_label" for="is_enabled">
+                able to book
+              </label>
+            </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Image URL</label>
-              <input type="text" class="modal-form_input" placeholder="Enter image URL"  v-model="tempRoomData.imageUrl"/>
+              <input type="text" class="modal-form_input" placeholder="Enter image URL"
+                v-model="tempRoomData.imageUrl" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Upload Image File</label>
-              <input type="file" class="modal-form_input-file" id='imageFile' @change='uploadFile'/>
+              <input type="file" class="modal-form_input-file" id='imageFile' @change='uploadFile' />
             </div>
           </div>
 
@@ -66,36 +73,40 @@ export default {
           <div class="modal-form_row">
             <div class="modal-form_group">
               <label class="modal-form_label">Original Price</label>
-              <input type="number" class="modal-form_input" placeholder="Enter original price" v-model="tempRoomData.origin_price"/>
+              <input type="number" class="modal-form_input" placeholder="Enter original price"
+                v-model="tempRoomData.origin_price" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Sale Price</label>
-              <input type="number" class="modal-form_input" placeholder="Enter sale price" v-model="tempRoomData.price" />
+              <input type="number" class="modal-form_input" placeholder="Enter sale price"
+                v-model="tempRoomData.price" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Room Number</label>
-              <input type="number" class="modal-form_input" placeholder="Enter room number" v-model="tempRoomData.num" />
+              <input type="number" class="modal-form_input" placeholder="Enter room number"
+                v-model="tempRoomData.num" />
             </div>
           </div>
 
           <!-- Description -->
           <div class="modal-form_group modal-form_group-full">
             <label class="modal-form_label">Room Description</label>
-            <textarea class="modal-form_textarea" placeholder="Enter room description"  v-model="tempRoomData.description"></textarea>
+            <textarea class="modal-form_textarea" placeholder="Enter room description"
+              v-model="tempRoomData.description"></textarea>
           </div>
 
           <!-- Content -->
           <div class="modal-form_group modal-form_group-full">
             <label class="modal-form_label">Room Content</label>
-            <textarea class="modal-form_textarea" placeholder="Enter room content"  v-model="tempRoomData.content"></textarea>
+            <textarea class="modal-form_textarea" placeholder="Enter room content"
+              v-model="tempRoomData.content"></textarea>
           </div>
         </form>
         <!-- button -->
         <div class="modal-form_group modal-form_group-button">
-          <button type="submit" class="modal-form_button" @click="submitFunc">submit</button>
+          <button type="submit" class="modal-form_button" @click="updateRoom">submit</button>
         </div>
       </div>
     </div>
   </div>
 </template>
-

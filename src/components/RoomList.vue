@@ -1,6 +1,8 @@
 <script>
+import { mapState, mapActions } from 'pinia';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
+import roomsView from '@/stores/roomsView';
 
 
 export default {
@@ -22,35 +24,22 @@ export default {
       default: false,
     },
   },
-  data() {
-    return {
-      rooms: [
-        {
-          image: 'mountain',
-          title: 'Pool View Room',
-          description: 'Soak in the Breathtaking Pool Views',
-          bedroom: 1,
-          guests: 2,
-          area: '220m2',
-          bathroom: 1,
-          facilities: [
-            'One King Bed',
-            'Wifi',
-            'Air Condition',
-            'Balcony',
-            'Television',
-            'Swimming Pool'
-          ],
-          price: 12.00,
-        },
-      ],
-    }
+  data: () => ({
+  }),
+  computed: {
+    ...mapState(roomsView, ['roomData']),
+  },
+  methods: {
+    ...mapActions(roomsView, ['getRoomsData']),
+  },
+  mounted() {
+    this.getRoomsData();
   },
 }
 </script>
 <template>
-  <div class="room-card" v-for="(room, index) in rooms" :key="index">
-    <div :class="`room-card_image room-card_image-${room.image}`"></div>
+  <div class="room-card" v-for="(room, index) in this.roomData" :key="index">
+    <div :class="`room-card_image room-card_image-${room.unit}`"></div>
     <div class="room-card_content">
       <div class="room-card_text">
         <h3 class="room-card_title">{{ room.title }}</h3>
@@ -58,24 +47,25 @@ export default {
         <div class="room-card_info">
           <span>
             <img src="@/assets/images/icon/bed.png">
-            {{ room.bedroom }} bedroom
+            {{ room.category / 2 }} bedroom
           </span>
           <span>
             <img src="@/assets/images/icon/guest.png">
-            {{ room.guests }} guests
+            {{ room.category }} guests
           </span>
           <span>
             <img src="@/assets/images/icon/area.png">
-            {{ room.area }}
+            {{ room.unit }}
           </span>
           <span>
             <img src="@/assets/images/icon/shower.png">
-            {{ room.bathroom }} bathroom
+            1 bathroom
           </span>
         </div>
         <div class="room-card_facilities">Available Facilities:
+          <!-- 用split將回傳的字串轉成陣列 -->
           <ul>
-            <li v-for="(i, index) in room.facilities" :key="index + 'facilities'">{{ i }}</li>
+            <li v-for="(facility, index) in room.content.split(',')" :key="index + 'facilities'">{{ facility }}</li>
           </ul>
         </div>
         <div class="quick-booking_form-room" v-if="remove">

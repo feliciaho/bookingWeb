@@ -8,7 +8,7 @@ export default {
     }
   },
   methods: {
-    toogleMenu() {
+    toggleMenu() {
       this.menuOpen = !this.menuOpen;
     },
     closeMenu() {
@@ -27,7 +27,7 @@ export default {
           <h1>Felicia Ho's Homestay</h1>
         </div>
       </RouterLink>
-      <div class="nav_hamburger" @click="toogleMenu" aria-label="menu">
+      <div class="nav_hamburger" @click="toggleMenu" aria-label="menu">
         <span :class="{ open: menuOpen }"></span>
         <span :class="{ open: menuOpen }"></span>
         <span :class="{ open: menuOpen }"></span>

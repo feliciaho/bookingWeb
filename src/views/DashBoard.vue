@@ -1,26 +1,28 @@
 <script>
 import { mapState, mapWritableState, mapActions } from 'pinia';
-import modalToogle from '@/stores/modalToogle';
+import modalToggle from '@/stores/modalToggle';
 import loadingStore from '@/stores/loadingStore';
+import dashboard from '@/stores/dashboard';
 import DashboardModal from '@/components/DashboardModal.vue';
 import ToastCom from '@/components/ToastCom.vue';
-import dashboard from '@/stores/dashboard';
+import PaginationCom from '@/components/PaginationCom.vue';
 
 export default {
   components: {
     DashboardModal,
     ToastCom,
+    PaginationCom
   },
   data: () => ({
   }),
   computed: {
     ...mapState(loadingStore, ['isloading']),
-    ...mapState(modalToogle, ['modalToogleSet']),
+    ...mapState(modalToggle, ['modalToggleSet']),
     ...mapWritableState(dashboard, ['rooms', 'tempRoomData', 'newRoom'])
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
-    ...mapActions(modalToogle, ['showModal', 'closeModal']),
+    ...mapActions(modalToggle, ['showModal', 'closeModal']),
     ...mapActions(dashboard, ['getRooms', 'deleteRoom']),
     // 驗證用者登入狀態
     async initDashboard() {
@@ -72,7 +74,7 @@ export default {
 <template>
   <main class="dashboard">
     <LoadingOverlay :active="isloading"></LoadingOverlay>
-    <ToastCom></ToastCom>
+    <ToastCom />
     <section class="room-table">
       <DashboardModal />
       <h1 class="room-table_title common-title">Dashboard</h1>
@@ -83,7 +85,7 @@ export default {
           <tr class="room-table_row">
             <th class="room-table_header">title</th>
             <th class="room-table_header">price</th>
-            <th class="room-table_header">Number of rooms</th>
+            <th class="room-table_header">able to book</th>
             <th class="room-table_header">edit</th>
           </tr>
         </thead>
@@ -91,9 +93,9 @@ export default {
           <tr class="room-table_row" v-for="room in rooms" :key="room.id">
             <td class="room-table_cell">{{ room.title }}</td>
             <td class="room-table_cell">{{ room.price }}</td>
-            <td class="room-table_cell">{{ room.num }}
-              <!-- <span class="room-table_status-able" v-if="room.is_enabled == 1">abled</span> -->
-              <!-- <span class="room-table_status-enabled" v-else>enabled</span> -->
+            <td class="room-table_cell">
+              <span class="room-table_status-able" v-if="room.is_enabled == 1">abled</span>
+              <span class="room-table_status-enabled" v-else>enabled</span>
             </td>
             <td class="room-table_cell">
               <button class="room-table_btn room-table_btn-edit" @click="addRoom(false, room)">edit</button>
@@ -102,6 +104,7 @@ export default {
           </tr>
         </tbody>
       </table>
+      <PaginationCom />
     </section>
   </main>
 </template>

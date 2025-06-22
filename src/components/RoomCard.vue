@@ -1,39 +1,25 @@
 <script>
+import { mapState, mapActions } from 'pinia';
+import roomsView from '@/stores/roomsView';
+
 export default {
   name: 'RoomCard',
-  data() {
-    return {
-      rooms: [
-        {
-          image: 'mountain',
-          title: 'Mountain View Room',
-          description: 'Embrace the Serenity of the Mountains',
-          bedroom: 1,
-          guests: 2,
-          area: '214m2',
-          price: 10.00,
-        },
-        {
-          image: 'pool',
-          title: 'Pool View Room',
-          description: 'Soak in the Breathtaking Pool Views',
-          bedroom: 1,
-          guests: 2,
-          area: '220m2',
-          bathroom: 1,
-          price: 12.00,
-        },
-        {
-          image: 'tropics',
-          title: 'Tropics Forest Room',
-          description: 'Bask in the Charm of the Tropics',
-          bedroom: 1,
-          guests: 2,
-          area: '210m2',
-          price: 8.00,
-        },
-      ],
-    }
+  data: () => ({
+    rooms: [],
+  }),
+  computed: {
+    ...mapState(roomsView, ['roomData']),
+  },
+  methods: {
+    ...mapActions(roomsView, ['getRoomsData']),
+    // 過濾房間資料，只顯示類別為2的房間
+    filterRooms() {
+      this.rooms = this.roomData.filter(room => room.category === "2");
+    },
+  },
+  async mounted() {
+    await this.getRoomsData();
+    this.filterRooms();
   },
 }
 
@@ -47,18 +33,18 @@ export default {
     <div class="rooms_grid">
       <!-- Mountain View Room -->
       <div class="room-card" v-for="(room, index) in rooms" :key="index">
-        <div :class= "`room-card_image room-card_image-${ room.image }`"></div>
+        <div :class="`room-card_image room-card_image-${room.unit}`"></div>
         <div class="room-card_content">
           <h3 class="room-card_title">{{ room.title }}</h3>
           <p class="room-card_description">{{ room.description }}</p>
           <div class="room-card_info">
             <span>
               <img src="@/assets/images/icon/bed.png">
-              {{ room.bedroom }} bedroom
+              {{ room.category / 2 }} bedroom
             </span>
             <span>
               <img src="@/assets/images/icon/area.png">
-              {{ room.area }}
+              {{ room.unit }}
             </span>
           </div>
           <div class="room-card_price">

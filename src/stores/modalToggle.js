@@ -1,16 +1,16 @@
 import {defineStore} from 'pinia';
 
-export default defineStore('modalToogle',{
+export default defineStore('modalToggle',{
   state:()=>({
-    modalToogleSet: false,
+    modalToggleSet: false,
   }),
   actions:{
     showModal(){
-      this.modalToogleSet = true;
+      this.modalToggleSet = true;
       console.log('Modal is shown');
     },
     closeModal(){
-      this.modalToogleSet = false;
+      this.modalToggleSet = false;
       console.log('Modal is closed');
     },
   }

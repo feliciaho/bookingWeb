@@ -1,41 +1,47 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import loadingStore from '@/stores/loadingStore'
+import modalToggle from '@/stores/modalToggle'
+import toastStore from '@/stores/toastStore'
 
 export default defineStore('dashboard', {
   state: () => ({
     rooms: [],
-    roomData: {},
     tempRoomData: {},
     newRoom: false,
-    toastTitle: 'Update',
-    toastContent: '15165',
-    toastSuccess: false,
-    toastToogleSet: false,
+    pagination: {},
   }),
   actions: {
-    // 吐司訊息
-    toastShow() {
-      this.toastToogleSet = true
-      setTimeout(() => {
-        this.toastToogleSet = false
-      }, 3000)
-    },
-    // 取得房間資料
-    async getRooms() {
+    // 取得房間資料,預設帶入參數page = 1
+    async getRooms(page = 1) {
+      const loading = loadingStore()
+      // 先開始loading
+      loading.startLoading();
       try {
-        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products`
+        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products/?page=${page}`
         const res = await axios.get(api)
         if (res.data.success == true) {
+          // 取得房間資料
           this.rooms = res.data.products
+          // 取得pagination資料
+          this.pagination = res.data.pagination
         } else {
           console.error('Error getRooms:', res.data.message)
         }
       } catch (error) {
         console.error('Error getRooms function', error)
+      } finally {
+        // 停止loading
+        loading.stopLoading();
       }
     },
     //更新房間資料
     async updateRoom() {
+      const loading = loadingStore()
+      const modal = modalToggle()
+      const toast = toastStore()
+      // 先開始loading
+      loading.startLoading();
       try {
         let api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product`
         let httpMethod = 'post'
@@ -50,23 +56,28 @@ export default defineStore('dashboard', {
           console.log('Successful update room')
           // 重新取得房間資料
           this.getRooms()
-          this.toastTitle = 'Update Success'
-          this.toastContent = ''
-          this.toastSuccess = true
-          this.toastShow()
+          // 吐司訊息
+          toast.toastSuccess('Update Success', '');
         } else {
           console.log('Error update room')
-          this.toastTitle = 'Update Failed'
-          this.toastContent = res.data.message.join('、')
-          this.toastSuccess = false
-          this.toastShow()
+          // 吐司訊息
+          toast.toastFailed('Update Failed', res.data.message.join('、'));
         }
       } catch (error) {
         console.log('Error update function', error)
+      } finally {
+        // 停止loading
+        // 關閉modal
+        modal.closeModal();
+        loading.stopLoading();
       }
     },
     //刪除房間資料
     async deleteRoom(room) {
+      const loading = loadingStore()
+      const toast = toastStore()
+      // 先開始loading
+      loading.startLoading();
       try {
         const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product/${room.id}`
         const res = await axios.delete(api)
@@ -74,23 +85,26 @@ export default defineStore('dashboard', {
           console.log('Successful delete room')
           // 重新取得房間資料
           this.getRooms()
-          this.toastTitle = 'Delete Success'
-          this.toastContent = ''
-          this.toastSuccess = true
-          this.toastShow()
+          // 吐司訊息
+          toast.toastSuccess('Delete Success','');
         } else {
           console.log('Error delete room')
-          this.toastTitle = 'Delete Failed'
-          this.toastContent = ''
-          this.toastSuccess = false
-          this.toastShow()
+          // 吐司訊息
+          toast.toastFailed('Delete Failed');
         }
       } catch (error) {
         console.log('Error delete function', error)
+      } finally {
+        // 停止loading
+        loading.stopLoading();
       }
     },
     //上傳圖片
     async uploadFile() {
+      const loading = loadingStore()
+      const toast = toastStore()
+      // 先開始loading
+      loading.startLoading();
       try {
         const uploadedFile = document.querySelector('#imageFile').files[0]
         // console.dir(uploadedFile)
@@ -104,19 +118,18 @@ export default defineStore('dashboard', {
           console.log('Successful upload img')
           // 將圖片連結更換成新上傳的圖片
           this.tempRoomData.imageUrl = res.data.imageUrl
-          this.toastTitle = 'Update Success'
-          this.toastContent = ''
-          this.toastSuccess = true
-          this.toastShow()
+          // 吐司訊息
+          toast.toastSuccess('Update Success','');
         } else {
           console.log('Error upload img')
-          this.toastTitle = 'Update Failed'
-          this.toastContent = res.data.message.join('、')
-          this.toastSuccess = false
-          this.toastShow()
+          // 吐司訊息
+          toast.toastFailed('Update Failed',res.data.message.join('、'));
         }
       } catch (error) {
         console.log('Error upload img function', error)
+      } finally {
+        // 停止loading
+        loading.stopLoading();
       }
     },
   },
