@@ -3,8 +3,8 @@ export default {
   name: 'BookingStep',
   props: {
     stepActive: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      required: true
     }
   }
 }

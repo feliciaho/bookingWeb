@@ -1,23 +1,45 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import loadingStore from '@/stores/loadingStore';
+import ToastCom from '@/components/ToastCom.vue';
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
 
+
 export default {
-  name: 'CartStep2',
+  name: 'CartStep1',
   components: {
     BookingStep,
     RoomList,
+    ToastCom
   },
-  
+  data: () => ({
+    guests: 1,
+    bedrooms: 1,
+    dateOptions: {
+      dateFormat: 'Y-m-d',
+      minDate: 'today',
+      enableTime: false,
+    },
+  }),
+  computed: {
+    ...mapState(loadingStore, ['isloading']),
+  },
+  methods: {
+    ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
+  },
+
 }
 </script>
 <template>
+  <LoadingOverlay :active="isloading"></LoadingOverlay>
+  <ToastCom />
   <main class="cart-step_1">
     <section class="booking-summary">
       <BookingStep :stepActive="1" />
       <!-- Room Section -->
       <div class="rooms_list">
-        <RoomList :add="false" :book="false" :remove="true" />
+        <RoomList :add="false" :remove="true" :viewOrCart="false" />
       </div>
       <!-- Booking Summary Section -->
       <div class="booking-summary_area">
@@ -34,7 +56,7 @@ export default {
             <ul class="booking-summary_info2">
               <li>Price Breakdown:</li>
               <li>Room rate: $10 × 2 nights = $20.00</li>
-              <li>Long stay discount<samll class="red"> : - $ 2.00</samll>
+              <li>Long stay discount<small class="red"> : - $ 2.00</small>
               </li>
               <li>Cleaning fee : $ 4.00</li>
               <li>Taxes : $ 4.00</li>
@@ -53,7 +75,7 @@ export default {
             <button type="button" class="booking-summary_button common-button">
               <RouterLink to="/cart/step2">
               </RouterLink>
-                Next Step
+              Next Step
             </button>
           </div>
         </div>

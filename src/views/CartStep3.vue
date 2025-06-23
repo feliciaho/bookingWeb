@@ -2,7 +2,7 @@
 import BookingStep from '@/components/BookingStep.vue';
 
 export default {
-  name: 'CartStep2',
+  name: 'CartStep3',
   components: {
     BookingStep,
   },
