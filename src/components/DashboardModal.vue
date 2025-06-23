@@ -10,7 +10,7 @@ export default {
   computed: {
     ...mapState(loadingStore, ['isloading']),
     ...mapState(modalToggle, ['modalToggleSet']),
-    ...mapWritableState(dashboard, ['tempRoomData'])
+    ...mapWritableState(dashboard, ['tempRoom'])
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
@@ -36,23 +36,23 @@ export default {
           <div class="modal-form_row">
             <div class="modal-form_group">
               <label class="modal-form_label">Title</label>
-              <input type="text" class="modal-form_input" placeholder="Enter room title" v-model="tempRoomData.title" />
+              <input type="text" class="modal-form_input" placeholder="Enter room title" v-model="tempRoom.title" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Category</label>
               <input type="text" class="modal-form_input" placeholder="Enter category"
-                v-model="tempRoomData.category" />
+                v-model="tempRoom.category" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Unit</label>
-              <input type="text" class="modal-form_input" placeholder="Enter unit" v-model="tempRoomData.unit" />
+              <input type="text" class="modal-form_input" placeholder="Enter unit" v-model="tempRoom.unit" />
             </div>
           </div>
 
           <!-- Row 2 -->
           <div class="modal-form_row">
             <div class="modal-form_group-checkbox">
-              <input class="modal-form_label" type="checkbox" v-model="tempRoomData.is_enabled" :true-value="1"
+              <input class="modal-form_label" type="checkbox" v-model="tempRoom.is_enabled" :true-value="1"
                 :false-value="0" id="is_enabled"/>
               <label class="modal-form_label" for="is_enabled">
                 able to book
@@ -61,7 +61,7 @@ export default {
             <div class="modal-form_group">
               <label class="modal-form_label">Image URL</label>
               <input type="text" class="modal-form_input" placeholder="Enter image URL"
-                v-model="tempRoomData.imageUrl" />
+                v-model="tempRoom.imageUrl" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Upload Image File</label>
@@ -74,17 +74,17 @@ export default {
             <div class="modal-form_group">
               <label class="modal-form_label">Original Price</label>
               <input type="number" class="modal-form_input" placeholder="Enter original price"
-                v-model="tempRoomData.origin_price" />
+                v-model="tempRoom.origin_price" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Sale Price</label>
               <input type="number" class="modal-form_input" placeholder="Enter sale price"
-                v-model="tempRoomData.price" />
+                v-model="tempRoom.price" />
             </div>
             <div class="modal-form_group">
               <label class="modal-form_label">Room Number</label>
               <input type="number" class="modal-form_input" placeholder="Enter room number"
-                v-model="tempRoomData.num" />
+                v-model="tempRoom.num" />
             </div>
           </div>
 
@@ -92,14 +92,14 @@ export default {
           <div class="modal-form_group modal-form_group-full">
             <label class="modal-form_label">Room Description</label>
             <textarea class="modal-form_textarea" placeholder="Enter room description"
-              v-model="tempRoomData.description"></textarea>
+              v-model="tempRoom.description"></textarea>
           </div>
 
           <!-- Content -->
           <div class="modal-form_group modal-form_group-full">
             <label class="modal-form_label">Room Content</label>
             <textarea class="modal-form_textarea" placeholder="Enter room content"
-              v-model="tempRoomData.content"></textarea>
+              v-model="tempRoom.content"></textarea>
           </div>
         </form>
         <!-- button -->

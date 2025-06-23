@@ -7,7 +7,7 @@ import toastStore from '@/stores/toastStore'
 export default defineStore('dashboard', {
   state: () => ({
     rooms: [],
-    tempRoomData: {},
+    tempRoom: {},
     newRoom: false,
     pagination: {},
   }),
@@ -22,14 +22,15 @@ export default defineStore('dashboard', {
         const res = await axios.get(api)
         if (res.data.success == true) {
           // 取得房間資料
+          console.log('Successful get rooms')
           this.rooms = res.data.products
           // 取得pagination資料
           this.pagination = res.data.pagination
         } else {
-          console.error('Error getRooms:', res.data.message)
+          console.error('Error get rooms', res.data.message)
         }
       } catch (error) {
-        console.error('Error getRooms function', error)
+        console.error('Error get rooms function', error)
       } finally {
         // 停止loading
         loading.stopLoading();
@@ -47,11 +48,11 @@ export default defineStore('dashboard', {
         let httpMethod = 'post'
         // 如果是編輯的話則把api跟呼叫方式更改
         if (this.newRoom === false) {
-          api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product/${this.tempRoomData.id}`
+          api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/product/${this.tempRoom.id}`
           httpMethod = 'put'
         }
         //要使用中括號js動態屬性存取語法
-        const res = await axios[httpMethod](api, { data: this.tempRoomData })
+        const res = await axios[httpMethod](api, { data: this.tempRoom })
         if (res.data.success == true) {
           console.log('Successful update room')
           // 重新取得房間資料
@@ -117,7 +118,7 @@ export default defineStore('dashboard', {
         if (res.data.success == true) {
           console.log('Successful upload img')
           // 將圖片連結更換成新上傳的圖片
-          this.tempRoomData.imageUrl = res.data.imageUrl
+          this.tempRoom.imageUrl = res.data.imageUrl
           // 吐司訊息
           toast.toastSuccess('Update Success','');
         } else {

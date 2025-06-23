@@ -3,6 +3,8 @@ import { mapState, mapActions } from 'pinia';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import roomsView from '@/stores/roomsView';
+import userCart from '@/stores/userCart';
+
 
 
 export default {
@@ -31,6 +33,7 @@ export default {
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
+    ...mapActions(userCart, ['addCart']),
   },
   mounted() {
     this.getRoomsData();
@@ -88,9 +91,9 @@ export default {
           <span class="currency">price/per night</span>
         </div>
         <div class="room-card_button">
-          <button class="room-card_button-add common-button" v-if="add">Add to Cart</button>
-          <button class="room-card_button-book common-button" v-if="book">Book Now</button>
-          <button class="room-card_button-remove common-button" v-if="remove">Remove</button>
+          <button class="room-card_button-add common-button" @click="addCart(room.id)">Add to Cart</button>
+          <!-- <button class="room-card_button-book common-button" v-if="book">Book Now</button> -->
+          <!-- <button class="room-card_button-remove common-button" v-if="remove">Remove</button> -->
         </div>
       </div>
     </div>

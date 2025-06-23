@@ -4,22 +4,27 @@ import axios from 'axios'
 export default defineStore('roomsView', {
   state: () => ({
     roomData: [],
+    categoryData: 0,
   }),
   actions: {
     // 取得房間資料
     async getRoomsData() {
       try {
-        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/products/all`
+        let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/products`
+        // 如果有選擇分類則帶入參數
+        if (this.categoryData !== 0) {
+          api += `?category=${this.categoryData}`
+        }
         const res = await axios.get(api)
         if (res.data.success == true) {
-          console.log('getRoomsData:', res.data.products)
+          console.log('Successful get roomsData')
           // 房間資料
           this.roomData = res.data.products
         } else {
-          console.error('Error getRooms:', res.data.message)
+          console.error('Error get roomsData', res.data.message)
         }
       } catch (error) {
-        console.error('Error getRooms function', error)
+        console.error('Error get roomsData function', error)
       }
     },
   }

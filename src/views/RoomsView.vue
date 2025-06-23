@@ -1,6 +1,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import loadingStore from '@/stores/loadingStore';
+import ToastCom from '@/components/ToastCom.vue';
 import HeroCom from '@/components/HeroCom.vue';
 import QuickBooking from '@/components/quickBooking.vue';
 import RoomList from '@/components/RoomList.vue';
@@ -11,6 +12,7 @@ export default {
     HeroCom,
     QuickBooking,
     RoomList,
+    ToastCom
   },
   computed: {
     ...mapState(loadingStore, ['isloading']),
@@ -23,6 +25,7 @@ export default {
 
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
+  <ToastCom />
   <main class="roomsView">
     <!-- Hero Section -->
     <HeroCom title="Rooms"

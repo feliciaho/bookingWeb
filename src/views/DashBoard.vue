@@ -18,7 +18,7 @@ export default {
   computed: {
     ...mapState(loadingStore, ['isloading']),
     ...mapState(modalToggle, ['modalToggleSet']),
-    ...mapWritableState(dashboard, ['rooms', 'tempRoomData', 'newRoom'])
+    ...mapWritableState(dashboard, ['rooms', 'tempRoom', 'newRoom'])
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
@@ -33,7 +33,7 @@ export default {
         const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/, '$1');
         // 將 header 夾帶 token
         this.axios.defaults.headers.common.Authorization = `${token}`;
-        const api = `${import.meta.env.VITE_APP_API}api/user/check`
+        const api = `${import.meta.env.VITE_APP_API}v2/api/user/check`
         const res = await this.axios.post(api, this.user)
         if (res.data.success == true) {
           console.log('Successful setting token');
@@ -55,11 +55,11 @@ export default {
     addRoom(isNew, item) {
       // 如果不是新的資料則解構取得的資料顯示
       if (isNew === false) {
-        this.tempRoomData = { ...item };
+        this.tempRoom = { ...item };
         this.newRoom = false;
         // 如果是新的資料則重新回空值
       } else {
-        this.tempRoomData = {};
+        this.tempRoom = {};
         this.newRoom = true;
       };
       // 彈跳視窗
