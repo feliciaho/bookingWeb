@@ -4,7 +4,7 @@ import axios from 'axios'
 export default defineStore('roomsView', {
   state: () => ({
     roomData: [],
-    categoryData: 0,
+    categoryData: null,
   }),
   actions: {
     // 取得房間資料
@@ -12,7 +12,7 @@ export default defineStore('roomsView', {
       try {
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/products`
         // 如果有選擇分類則帶入參數
-        if (this.categoryData !== 0) {
+        if (this.categoryData) {
           api += `?category=${this.categoryData}`
         }
         const res = await axios.get(api)

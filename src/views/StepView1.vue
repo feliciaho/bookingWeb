@@ -4,6 +4,7 @@ import loadingStore from '@/stores/loadingStore';
 import ToastCom from '@/components/ToastCom.vue';
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
+import userCart from '@/stores/userCart';
 
 
 export default {
@@ -27,8 +28,21 @@ export default {
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
-  },
+    ...mapActions(userCart, ['removeCart']),
 
+  },
+  // 在組件掛載時檢查是否為重新載入頁面
+  // mounted() {
+  //   // 只在瀏覽器重新整理（reload）時才跳轉，避免首次進入也被判斷為 reload
+  //   if (window.performance) {
+  //     const navEntries = performance.getEntriesByType("navigation");
+  //     const navType = navEntries.length ? navEntries[0].type : performance.navigation.type === 1 ? 'reload' : '';
+  //     if (navType === 'reload') {
+  //       this.$router.replace('/roomsView');
+  //       console.log('Page reloaded, redirecting to /roomsView');
+  //     }
+  //   }
+  // },
 }
 </script>
 <template>
@@ -39,7 +53,7 @@ export default {
       <BookingStep :stepActive="1" />
       <!-- Room Section -->
       <div class="rooms_list">
-        <RoomList :add="false" :remove="true" :viewOrCart="false" />
+        <RoomList :book="false" :viewOrCart="false" />
       </div>
       <!-- Booking Summary Section -->
       <div class="booking-summary_area">
@@ -73,7 +87,7 @@ export default {
           </div>
           <div class="booking-summary_button-area">
             <button type="button" class="booking-summary_button common-button">
-              <RouterLink to="/cart/step2">
+              <RouterLink to="/booking/stepView2">
               </RouterLink>
               Next Step
             </button>

@@ -28,20 +28,20 @@ const router = createRouter({
       component: () => import('../views/RoomsView.vue'),
     },
     {
-      path: '/cart',
-      name: 'Cart',
+      path: '/booking',
+      name: 'Booking',
       children: [
         {
-          path: 'step1',
-          component: () => import('../views/CartStep1.vue'),
+          path: 'stepView1',
+          component: () => import('../views/StepView1.vue'),
         },
         {
-          path: 'step2',
-          component: () => import('../views/CartStep2.vue'),
+          path: 'stepView2',
+          component: () => import('../views/StepView2.vue'),
         },
         {
-          path: 'step3',
-          component: () => import('../views/CartStep3.vue'),
+          path: 'stepView3',
+          component: () => import('../views/StepView3.vue'),
         },
       ],
     },

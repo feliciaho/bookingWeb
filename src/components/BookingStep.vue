@@ -12,7 +12,7 @@ export default {
 <template>
   <div class="booking-step">
     <span class="booking-step_subtitle common-subtitle">Book Now!</span>
-    <h2 class="booking-step_title common-title">Cart</h2>
+    <h2 class="booking-step_title common-title">Booking</h2>
     <div class="booking-step_area">
       <div class="booking-step_group">
         <span class="booking-step_number" :class="{active: stepActive === 1}">1</span>

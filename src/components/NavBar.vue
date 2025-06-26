@@ -43,13 +43,13 @@ export default {
           <RouterLink to="/exploreView" @click="closeMenu">Explore</RouterLink>
         </li>
         <li>
-          <RouterLink to="/roomsView" @click="closeMenu">Rooms</RouterLink>
+          <RouterLink to="/roomsView" @click="closeMenu">Booking</RouterLink>
         </li>
-        <li>
+        <!-- <li>
           <RouterLink to="/cart/step1" @click="closeMenu">
             <img src="@/assets/images/icon/cart.png" alt="cart">
           </RouterLink>
-        </li>
+        </li> -->
         <li>
           <RouterLink to="/loginView" @click="closeMenu">
             <img src="@/assets/images/icon/account.png" alt="user">

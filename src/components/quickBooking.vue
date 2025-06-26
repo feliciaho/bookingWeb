@@ -5,7 +5,7 @@ import roomsView from '@/stores/roomsView';
 import userCart from '@/stores/userCart';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
-
+import toast from '@/stores/toastStore';
 
 export default {
   name: 'quickBooking',
@@ -27,25 +27,43 @@ export default {
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
+    ...mapActions(toast, ['toastFailed']),
+    // 搜尋房間
     async search() {
       try {
+        //如果沒有選擇日期則return
+        if (!this.checkIn || !this.checkOut) {
+          this.toastFailed('Error Date', 'Please select both check-in and check-out dates.');
+          return;
+        }
         // 如果房客人數大於2或臥室數量大於1，則設定類別為4，否則為2
         if (this.guests > 2 || this.bedrooms > 1) {
           this.categoryData = 4;
-          console.log(this.categoryData);
         } else {
           this.categoryData = 2;
         }
         // 重新取得房間資料
         await this.getRoomsData();
-      } catch (error) {
-        console.error('Error search', error);
-      } finally {
         // 導向到房間列表頁面
         this.$router.push('/roomsView');
+      } catch (error) {
+        console.error('Error search', error);
       }
     },
-  }
+    // 驗證日期入住日不能大於退房日
+    validDate() {
+      if (this.checkIn && this.checkOut && new Date(this.checkIn) >= new Date(this.checkOut)) {
+        // 如果入住日大於或等於退房日，則清空日期
+        this.checkIn = null
+        this.checkOut = null
+      }
+    },
+  },
+  // 監聽日期變化
+  watch: {
+    checkIn: 'validDate',
+    checkOut: 'validDate',
+  },
 }
 </script>
 

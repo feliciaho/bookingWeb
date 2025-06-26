@@ -5,6 +5,9 @@ import HeroCom from '@/components/HeroCom.vue';
 import QuickBooking from '@/components/quickBooking.vue';
 import FeatureCom from '@/components/FeatureCom.vue';
 import RoomCard from '@/components/RoomCard.vue';
+import ToastCom from '@/components/ToastCom.vue';
+
+
 export default {
   name: 'HomeView',
   components: {
@@ -12,6 +15,7 @@ export default {
     QuickBooking,
     FeatureCom,
     RoomCard,
+    ToastCom
   },
   computed: {
     ...mapState(loadingStore, ['isloading']),
@@ -19,14 +23,15 @@ export default {
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
   },
-  created(){
-    console.log(import.meta.env.VITE_APP_API,import.meta.env.VITE_APP_PATH );
+  created() {
+    console.log(import.meta.env.VITE_APP_API, import.meta.env.VITE_APP_PATH);
   },
 }
 </script>
 
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
+  <ToastCom />
   <main class="home">
     <!-- Hero Section -->
     <HeroCom title="Discover the Enchanting Bali Retreat"

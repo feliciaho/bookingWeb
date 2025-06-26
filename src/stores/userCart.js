@@ -1,25 +1,23 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import loadingStore from '@/stores/loadingStore'
-import toastStore from '@/stores/toastStore'
 
 export default defineStore('userCart', {
   state: () => ({
     cartData: [],
-    checkIn: new Date().toISOString().split('T')[0], // 綁定今日日期 (YYYY-MM-DD)
+    checkIn: null,
     checkOut: null,
-    // newCheckOut: null,
   }),
   actions: {
     // 加入購物車
-    async addCart(id,nights) {
+    async addCart(id, nights) {
       const loading = loadingStore()
-      const toast = toastStore()
-      // 先開始loading
       loading.startLoading();
       try {
+        // 先清空購物車再加入新資料
+        await this.removeCart();
+        // 開始呼叫API加入購物車
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/cart`
-        // 準備要加入購物車的資料
         const cart = {
           product_id: id,
           qty: nights,
@@ -27,24 +25,50 @@ export default defineStore('userCart', {
         const res = await axios.post(api, { data: cart })
         if (res.data.success == true) {
           console.log('Successful add room to cart')
-          // 吐司訊息
-          toast.toastSuccess('Add To Cart Success', '');
+          // 加入成功後同步取得購物車資料
+          await this.getCart();
         } else {
           console.error('Error add room to cart', res.data.message)
-          // 吐司訊息
-          toast.toastFailed('Add To Cart Failed', res.data.message.join('、'));
         }
       } catch (error) {
         console.error('Error addCart function', error)
-      }finally {
-        // 停止loading
+      } finally {
+        loading.stopLoading();
+      }
+    },
+    // 更新購物車資料(更新房間日期)
+    async updateCart(id, nights) {
+      const loading = loadingStore()
+      loading.startLoading();
+      if (nights <= 0 || nights === null) {
+        console.error('Nights must be greater than 0')
+        loading.stopLoading();
+        return;
+      }
+      try {
+        // 開始呼叫API加入購物車
+        let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/cart/${id}`
+        const cart = {
+          product_id: id,
+          qty: nights,
+        }
+        const res = await axios.put(api, { data: cart })
+        if (res.data.success == true) {
+          console.log('Successful update room to cart')
+          // 加入成功後同步取得購物車資料
+          await this.getCart();
+        } else {
+          console.error('Error update room to cart', res.data.message)
+        }
+      } catch (error) {
+        console.error('Error updateRoom function', error)
+      } finally {
         loading.stopLoading();
       }
     },
     // 取得購物車資料
     async getCart() {
       const loading = loadingStore()
-      const toast = toastStore()
       // 先開始loading
       loading.startLoading();
       try {
@@ -52,45 +76,32 @@ export default defineStore('userCart', {
         const res = await axios.get(api)
         if (res.data.success == true) {
           console.log('Successful get cart data')
-          console.log(res.data.data.carts)
           this.cartData = res.data.data.carts
         } else {
           console.error('Error get cart data', res.data.message)
-          // 吐司訊息
-          toast.toastFailed('Get Cart Failed', res.data.message.join('、'));
         }
       } catch (error) {
         console.error('Error getCart function', error)
-      }finally {
+      } finally {
         // 停止loading
         loading.stopLoading();
       }
     },
     // 刪除購物車資料
-    async removeCart(id) {
+    async removeCart() {
       const loading = loadingStore()
-      const toast = toastStore()
       // 先開始loading
       loading.startLoading();
       try {
-        let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/cart/${id}`
+        let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/carts`
         const res = await axios.delete(api)
         if (res.data.success == true) {
           console.log('Successful remove')
-          // 吐司訊息
-          toast.toastSuccess('Remove Success', '');
-          // 重新取得購物車資料
-          this.getCart();
         } else {
           console.error('Error remove', res.data.message)
-          // 吐司訊息
-          toast.toastFailed('Remove Failed', res.data.message.join('、'));
         }
       } catch (error) {
         console.error('Error remove function', error)
-      }finally {
-        // 停止loading
-        loading.stopLoading();
       }
     },
   }
