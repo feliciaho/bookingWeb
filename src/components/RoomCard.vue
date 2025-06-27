@@ -49,7 +49,7 @@ export default {
           </div>
           <div class="room-card_price">
             <div class="room-card_price-night">
-              <span class="price">$ {{ room.price }}.00</span>
+              <span class="price">$ {{ room.origin_price }}.00</span>
               <span class="currency">USD</span>
             </div>
             <span class="pernight">price/per night</span>

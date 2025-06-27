@@ -8,6 +8,7 @@ import ToastCom from '@/components/ToastCom.vue';
 import PaginationCom from '@/components/PaginationCom.vue';
 
 export default {
+  name: 'DashBoard',
   components: {
     DashboardModal,
     ToastCom,

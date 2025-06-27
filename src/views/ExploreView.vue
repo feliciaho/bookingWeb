@@ -2,7 +2,7 @@
 import HeroCom from '@/components/HeroCom.vue';
 import FeatureCom from '@/components/FeatureCom.vue';
 export default {
-  name: 'HomeView',
+  name: 'ExploreView',
   components: {
     HeroCom,
     FeatureCom,

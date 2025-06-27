@@ -26,8 +26,8 @@ export default {
       dateFormat: 'Y-m-d',
       minDate: 'today',
       enableTime: false,
-      validDateSet: true,
     },
+    validDateSet: true,
   }),
   computed: {
     ...mapState(roomsView, ['roomData']),
@@ -55,14 +55,19 @@ export default {
         // 如果入住日大於或等於退房日，則清空日期
         this.checkIn = null
         this.checkOut = null
-        this.validDateSet = false; // 設定validDateSet為false
+        // 設定validDateSet為false
+        this.validDateSet = false;
+      }else {
+        // 如果日期有效，則設定validDateSet為true
+        this.validDateSet = true;
       }
     },
+    // 預訂房間
     async bookRoom(roomId, stayNights) {
       try {
         //如果沒有選擇日期則return
         if (!this.checkIn || !this.checkOut || !this.validDateSet) {
-          this.toastFailed('Error Date', 'Please select both check-in and check-out dates.');
+          this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
         // 呼叫addCart方法，傳入房間ID和入住天數
@@ -75,11 +80,12 @@ export default {
         return;
       }
     },
+    // 更新房間資訊
     async updateRoom(roomId, stayNights) {
       try {
         //如果沒有選擇日期則return
         if (!this.checkIn || !this.checkOut || !this.validDateSet) {
-          this.toastFailed('Error Date', 'Please select both check-in and check-out dates.');
+          this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
         // 呼叫addCart方法，傳入房間ID和入住天數
@@ -92,14 +98,15 @@ export default {
       }
     },
   },
-  mounted() {
+  created() {
     // 判斷是在roomsView還是在cart
     if (!this.viewOrCart) {
-      this.getCart();
+      this.getRoomsData();
     }
   },
   // 監聽日期變化
   watch: {
+    // 當checkIn或checkOut變化時，呼叫validDate方法
     checkIn: 'validDate',
     checkOut: 'validDate',
   },
@@ -121,7 +128,7 @@ export default {
           </span>
           <span>
             <img src="@/assets/images/icon/guest.png">
-            {{ this.viewOrCart ? room.category : room.product.category }} guests
+            {{ this.viewOrCart ? room.category : room.product.category }} guests(maximum)
           </span>
           <span>
             <img src="@/assets/images/icon/area.png">
@@ -155,7 +162,7 @@ export default {
       <div class="room-card_butArea">
         <div class="room-card_price">
           <div class="room-card_price-night">
-            <span class="price">${{ this.viewOrCart ? room.price : room.product.price }}.00</span>
+            <span class="price">${{ this.viewOrCart ? room.origin_price : room.product.origin_price }}.00</span>
             <span class="currency"> USD</span>
           </div>
           <span class="currency">price/per night</span>

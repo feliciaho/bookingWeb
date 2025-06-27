@@ -7,7 +7,7 @@ import QuickBooking from '@/components/quickBooking.vue';
 import RoomList from '@/components/RoomList.vue';
 
 export default {
-  name: 'HomeView',
+  name: 'RoomsView',
   components: {
     HeroCom,
     QuickBooking,

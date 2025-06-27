@@ -26,7 +26,7 @@ export default {
       <div class="booking-step_line"></div>
       <div class="booking-step_group">
         <span class="booking-step_number" :class="{active: stepActive === 3}">3</span>
-        <span class="booking-step_text">Complete</span>
+        <span class="booking-step_text">Payment</span>
       </div>
     </div>
   </div>

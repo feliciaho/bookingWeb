@@ -40,7 +40,7 @@ const router = createRouter({
           component: () => import('../views/StepView2.vue'),
         },
         {
-          path: 'stepView3',
+          path: 'stepView3/:orderId',
           component: () => import('../views/StepView3.vue'),
         },
       ],

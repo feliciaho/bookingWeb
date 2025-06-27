@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 import loadingStore from '@/stores/loadingStore'
+import toastStore from './toastStore'
 
 export default defineStore('userCart', {
   state: () => ({
@@ -11,8 +12,6 @@ export default defineStore('userCart', {
   actions: {
     // 加入購物車
     async addCart(id, nights) {
-      const loading = loadingStore()
-      loading.startLoading();
       try {
         // 先清空購物車再加入新資料
         await this.removeCart();
@@ -32,14 +31,14 @@ export default defineStore('userCart', {
         }
       } catch (error) {
         console.error('Error addCart function', error)
-      } finally {
-        loading.stopLoading();
       }
     },
     // 更新購物車資料(更新房間日期)
     async updateCart(id, nights) {
+      const toast = toastStore()
       const loading = loadingStore()
       loading.startLoading();
+      // 檢查nights是否為有效數字，如不是則return
       if (nights <= 0 || nights === null) {
         console.error('Nights must be greater than 0')
         loading.stopLoading();
@@ -55,15 +54,17 @@ export default defineStore('userCart', {
         const res = await axios.put(api, { data: cart })
         if (res.data.success == true) {
           console.log('Successful update room to cart')
+          // 吐司訊息
+          toast.toastSuccess('Update Successful')
           // 加入成功後同步取得購物車資料
           await this.getCart();
         } else {
           console.error('Error update room to cart', res.data.message)
+          // 吐司訊息
+          toast.toastError('Update Failed', res.data.message)
         }
       } catch (error) {
         console.error('Error updateRoom function', error)
-      } finally {
-        loading.stopLoading();
       }
     },
     // 取得購物車資料
