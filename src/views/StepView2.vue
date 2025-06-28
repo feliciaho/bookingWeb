@@ -19,7 +19,8 @@ export default {
         name: '',
         email: '',
         tel: '',
-        address: ``, // 這裡會加入入住和退房日期
+        // 將入住和退房日期加入地址欄位
+        address: ``,
       },
       message: '',
     },
@@ -31,16 +32,9 @@ export default {
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
     ...mapActions(toast, ['toastFailed']),
-    // 將入住和退房日期加入地址欄位
+    // 新增訂單
     async addOrder() {
       this.startLoading();
-      // 偵測是否有重整頁面,因為date會變回空值,如果有則顯示錯誤訊息並返回booking頁面
-      if (!this.checkIn || !this.checkOut) {
-        this.toastFailed('Don’t refresh page', 'Please place your order again.');
-        this.$router.push(`/booking/stepView1`);
-        this.stopLoading();
-        return;
-      }
       try {
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/order`
         const order = this.form;
@@ -50,16 +44,25 @@ export default {
           this.$router.push(`/booking/stepView3/${res.data.orderId}`);
         } else {
           console.error('Error add order', res.data.message)
+          this.toastFailed('Error fields', res.data.message);
         }
       } catch (error) {
         console.error('Error addOrder function', error)
+        this.toastFailed('Error fields', 'Please fill in all fields.');
       } finally {
         this.stopLoading();
       }
     },
-    // 將入住和退房日期加入地址欄位
     addDate() {
-      this.form.user.address = `${this.checkIn} ~ ${this.checkOut}`;
+      // 偵測是否有重整頁面,因為date會變回空值,如果有則顯示錯誤訊息並返回booking頁面
+      if (!this.checkIn || !this.checkOut) {
+        this.toastFailed('Don’t refresh page', 'Please place your order again.');
+        this.$router.push(`/roomsView`);
+        return;
+      } else {
+        // 將入住和退房日期加入地址欄位
+        this.form.user.address = `${this.checkIn} ~ ${this.checkOut}`;
+      }
     }
   },
   mounted() {
@@ -89,15 +92,6 @@ export default {
           <input type="tel" id="tel" v-model="form.user.tel" class="booking-form_input"
             placeholder="Enter your contact number">
         </div>
-        <!-- <div class="booking-form_group">
-          <label for="payment" class="booking-form_label">Payment Method</label>
-          <select id="payment" class="booking-form_select">
-            <option value="">Select a payment method</option>
-            <option value="credit-card">Credit Card</option>
-            <option value="bank-transfer">Bank Transfer</option>
-            <option value="paypal">PayPal</option>
-          </select>
-        </div> -->
         <div class="booking-form_group">
           <label for="requests" class="booking-form_label">Special Requests</label>
           <textarea id="requests" v-model="form.message" class="booking-form_textarea"

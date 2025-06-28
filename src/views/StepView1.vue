@@ -2,6 +2,7 @@
 import { mapActions, mapState } from 'pinia';
 import loadingStore from '@/stores/loadingStore';
 import ToastCom from '@/components/ToastCom.vue';
+import toast from '@/stores/toastStore';
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
 import userCart from '@/stores/userCart';
@@ -28,11 +29,21 @@ export default {
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
-    ...mapActions(userCart, ['removeCart','getCart']),
+    ...mapActions(userCart, ['removeCart', 'getCart']),
+    ...mapActions(toast, ['toastFailed']),
+    refreshCheck() {
+      // 偵測是否有重整頁面,因為date會變回空值,如果有則顯示錯誤訊息並返回booking頁面
+      if (!this.checkIn || !this.checkOut) {
+        this.toastFailed('Don’t refresh page', 'Please place your order again.');
+        this.$router.push(`/roomsView`);
+        return;
+      }
+    }
   },
   mounted() {
     // 初始化購物車資料
     this.getCart();
+    this.refreshCheck();
   },
 }
 </script>
@@ -80,7 +91,7 @@ export default {
           <div class="booking-summary_button-area">
             <button type="button" v-if="this.checkIn && this.checkOut" class="booking-summary_button common-button">
               <RouterLink to="/booking/stepView2">
-              </RouterLink >
+              </RouterLink>
               Next Step
             </button>
           </div>

@@ -11,7 +11,6 @@ export default {
 </script>
 
 <template>
-  <LoadingOverlay :active="isloading"></LoadingOverlay>
   <main class="explore">
     <!-- Hero Section -->
     <HeroCom title="Explore Homestay"

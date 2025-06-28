@@ -4,8 +4,6 @@ import BookingStep from '@/components/BookingStep.vue';
 import loadingStore from '@/stores/loadingStore'
 import ToastCom from '@/components/ToastCom.vue';
 import toast from '@/stores/toastStore';
-
-
 import axios from 'axios';
 
 export default {
@@ -23,7 +21,7 @@ export default {
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
     ...mapActions(toast, ['toastFailed', 'toastSuccess']),
-    // 將入住和退房日期加入地址欄位
+    // 獲取訂單資料
     async getOrder() {
       this.startLoading();
       try {
@@ -41,6 +39,7 @@ export default {
         this.stopLoading();
       }
     },
+    // 支付訂單
     async payOrder() {
       this.startLoading();
       try {
@@ -50,7 +49,8 @@ export default {
           this.order = res.data.order;
           console.log('Successful pay order')
           this.toastSuccess('Payment Successful', 'Thank you for your payment!');
-          this.getOrder(); // 更新訂單狀態
+          // 更新訂單狀態
+          this.getOrder();
         } else {
           console.error('Error pay order', res.data.message)
           this.toastFailed('Payment Failed', res.data.message);
@@ -75,8 +75,8 @@ export default {
       <BookingStep :stepActive="3" />
       <div class="booking-complete_area">
         <h2 class="booking-complete_title common-title">Booking Summary</h2>
-        <form class="booking-complete_form" @submit.prevent="payOrder()" v-if="order.user && order.products">
-          <ul class="booking-complete_list" >
+        <form class="booking-complete_form" @submit.prevent="payOrder()" >
+          <ul class="booking-complete_list" v-if="order.user && order.products">
             <li>Name: {{ order.user.name }}</li>
             <li><img src="@/assets/images/icon/email.png">Email: {{ order.user.email}}</li>
             <li><img src="@/assets/images/icon/phone.png">Phone: {{ order.user.tel }}</li>

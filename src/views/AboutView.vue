@@ -11,7 +11,6 @@ export default {
 </script>
 
 <template>
-  <LoadingOverlay :active="isloading"></LoadingOverlay>
   <main class="about">
     <!-- Hero Section -->
     <HeroCom
@@ -24,7 +23,7 @@ export default {
       subtitle="About me and Homestay"
       text="I am an Indonesian Chinese who speaks Mandarin, English, and Indonesian fluently, ensuring a warm and welcoming experience for guests from diverse backgrounds.
           Here, you will immerse yourself in a Bali-inspired retreat, where every detail is thoughtfully designed for an unparalleled relaxation experience. Enjoy the serenity of lush greenery, natural textures, and the soothing whispers of ocean waves."
-      :button="flase"
+      :button="false"
      />
   </main>
 </template>
