@@ -41,10 +41,11 @@ export default {
     }
   },
   mounted() {
-    // 初始化購物車資料
-    this.getCart();
     this.refreshCheck();
   },
+  created() {
+    this.getCart();
+  }
 }
 </script>
 <template>

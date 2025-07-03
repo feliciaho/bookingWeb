@@ -9,6 +9,7 @@
   display: flex
   flex-direction: column
   align-items: center
+  overflow-x: auto
 
   &_area
     width: 100%
@@ -23,7 +24,7 @@
     border-bottom: 2px solid $black
     text-align: center
     @include media-sp
-      padding: 0.75rem
+      padding: 0.5rem
 
   &_cell
     width: 16%
@@ -32,7 +33,7 @@
     vertical-align: middle
     text-align: center
     @include media-sp
-      padding: 0.75rem
+      padding: 0.5rem
 
   &_status
 
@@ -60,7 +61,7 @@
       top: 5rem
       right: 3rem
       margin: 0.5rem
-      background-color: $secondary-color
+      background-color: $price-color
       @include media-sp
         top: 1rem
         right: 1rem
@@ -68,3 +69,15 @@
         position: relative
         top: 0
         right: 0
+
+    &-tab
+      margin: 0.5rem
+      background-color: $secondary-color
+      &.active
+        background-color: $darkgray
+
+  &_btns
+    display: flex
+    flex-direction: row
+    justify-content: center
+    flex-wrap: wrap

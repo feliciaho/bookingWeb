@@ -10,6 +10,7 @@ export default defineStore('toastStore', {
   actions: {
     toastShow() {
       this.toastToggleSet = true
+      console.log('toastSuccess6666')
       setTimeout(() => {
         this.toastToggleSet = false
       }, 3000)
@@ -18,6 +19,7 @@ export default defineStore('toastStore', {
       this.toastSuccessSet = true
       this.toastTitle = title
       this.toastContent = content
+      console.log('toastSuccess8888888888')
       this.toastShow()
     },
     toastFailed(title, content) {

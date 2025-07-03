@@ -13,8 +13,10 @@ export default defineStore('userCart', {
     // 加入購物車
     async addCart(id, nights) {
       try {
-        // 先清空購物車再加入新資料
-        await this.removeCart();
+        // 如果購物車內有東西，先清空購物車再加入新資料
+        if (this.cartData.length > 0) {
+          await this.removeCart();
+        }
         // 開始呼叫API加入購物車
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/cart`
         const cart = {

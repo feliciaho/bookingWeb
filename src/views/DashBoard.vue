@@ -7,6 +7,7 @@ import DashboardModal from '@/components/DashboardModal.vue';
 import ToastCom from '@/components/ToastCom.vue';
 import PaginationCom from '@/components/PaginationCom.vue';
 
+
 export default {
   name: 'DashBoard',
   components: {
@@ -19,12 +20,12 @@ export default {
   computed: {
     ...mapState(loadingStore, ['isloading']),
     ...mapState(modalToggle, ['modalToggleSet']),
-    ...mapWritableState(dashboard, ['rooms', 'tempRoom', 'newRoom'])
+    ...mapWritableState(dashboard, ['rooms', 'tempRoom', 'newRoom', 'orders', 'tabToggle','orderDetailsData']),
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
     ...mapActions(modalToggle, ['showModal', 'closeModal']),
-    ...mapActions(dashboard, ['getRooms', 'deleteRoom']),
+    ...mapActions(dashboard, ['getRooms', 'deleteRoom', 'getOrders','deleteOrder','orderDetails']),
     // 驗證用者登入狀態
     async initDashboard() {
       try {
@@ -66,9 +67,11 @@ export default {
       // 彈跳視窗
       this.showModal();
     },
+
   },
   created() {
     this.initDashboard();
+    this.getOrders();
   }
 }
 </script>
@@ -80,8 +83,14 @@ export default {
       <DashboardModal />
       <h1 class="room-table_title common-title">Dashboard</h1>
       <p class="room-table_subtitle common-subtitle">Welcome to Felicia Ho's Homestay Dashboard.</p>
-      <button class="room-table_btn room-table_btn-add" @click="addRoom(true)">add room</button>
-      <table class="room-table_area">
+      <div class="room-table_btns">
+        <button class="room-table_btn room-table_btn-tab" @click="tabToggle = 'room'"
+          :class="{ active: tabToggle === 'room' }">Room</button>
+        <button class="room-table_btn room-table_btn-tab" @click="tabToggle = 'order'"
+          :class="{ active: tabToggle === 'order' }">Order</button>
+      </div>
+      <button class="room-table_btn room-table_btn-add" v-if="tabToggle === 'room'" @click="addRoom(true)">add room</button>
+      <table class="room-table_area" v-if="tabToggle === 'room'">
         <thead class="room-table_head">
           <tr class="room-table_row">
             <th class="room-table_header">title</th>
@@ -93,7 +102,7 @@ export default {
         <tbody class="room-table_body">
           <tr class="room-table_row" v-for="room in rooms" :key="room.id">
             <td class="room-table_cell">{{ room.title }}</td>
-            <td class="room-table_cell">{{ room.price }}</td>
+            <td class="room-table_cell">${{ room.price }}.00 USD</td>
             <td class="room-table_cell">
               <span class="room-table_status-able" v-if="room.is_enabled == 1">abled</span>
               <span class="room-table_status-enabled" v-else>enabled</span>
@@ -101,6 +110,30 @@ export default {
             <td class="room-table_cell">
               <button class="room-table_btn room-table_btn-edit" @click="addRoom(false, room)">edit</button>
               <button class="room-table_btn room-table_btn-delete" @click="deleteRoom(room)">delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="room-table_area" v-if="tabToggle === 'order'">
+        <thead class="room-table_head">
+          <tr class="room-table_row">
+            <th class="room-table_header">customer</th>
+            <th class="room-table_header">paid</th>
+            <th class="room-table_header">order ID</th>
+            <th class="room-table_header">order info</th>
+          </tr>
+        </thead>
+        <tbody class="room-table_body">
+          <tr class="room-table_row" v-for="order in orders" :key="order.id">
+            <td class="room-table_cell">{{ order.user.name }}</td>
+            <td class="room-table_cell">
+              <span class="room-table_status-enabled" v-if="order.is_paid == false">not paid</span>
+              <span class="room-table_status-able" v-else>paid</span>
+            </td>
+            <td class="room-table_cell">{{ order.id }}</td>
+            <td class="room-table_cell">
+              <button class="room-table_btn room-table_btn-edit" @click="orderDetails(order)">more</button>
+              <button class="room-table_btn room-table_btn-delete" @click="deleteOrder(order)">delete</button>
             </td>
           </tr>
         </tbody>

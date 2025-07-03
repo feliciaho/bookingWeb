@@ -93,6 +93,14 @@ export default {
             placeholder="Enter your contact number">
         </div>
         <div class="booking-form_group">
+          <label for="payment" class="booking-form_label">Payment Method</label>
+          <select id="payment" class="booking-form_input">
+            <option disabled value="">Please select a payment method</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="cash">Apple Pay</option>
+          </select>
+        </div>
+        <div class="booking-form_group">
           <label for="requests" class="booking-form_label">Special Requests</label>
           <textarea id="requests" v-model="form.message" class="booking-form_textarea"
             placeholder="Enter any special requests"></textarea>

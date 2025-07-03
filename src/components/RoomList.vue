@@ -57,7 +57,7 @@ export default {
         this.checkOut = null
         // 設定validDateSet為false
         this.validDateSet = false;
-      }else {
+      } else {
         // 如果日期有效，則設定validDateSet為true
         this.validDateSet = true;
       }
@@ -98,17 +98,17 @@ export default {
       }
     },
   },
-  created() {
-    // 判斷是在roomsView還是在cart
-    if (!this.viewOrCart) {
-      this.getRoomsData();
-    }
-  },
   // 監聽日期變化
   watch: {
     // 當checkIn或checkOut變化時，呼叫validDate方法
     checkIn: 'validDate',
     checkOut: 'validDate',
+  },
+  created() {
+    // 判斷是在roomsView還是在cart
+    if (!this.viewOrCart) {
+      this.getRoomsData();
+    }
   },
 }
 </script>

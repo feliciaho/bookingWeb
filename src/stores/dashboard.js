@@ -7,9 +7,13 @@ import toastStore from '@/stores/toastStore'
 export default defineStore('dashboard', {
   state: () => ({
     rooms: [],
+    order: [],
+    orderDetailsData: {},
     tempRoom: {},
     newRoom: false,
-    pagination: {},
+    rooms_pagination: {},
+    orders_pagination: {},
+    tabToggle: "room",
   }),
   actions: {
     // 取得房間資料,預設帶入參數page = 1
@@ -25,7 +29,7 @@ export default defineStore('dashboard', {
           console.log('Successful get rooms')
           this.rooms = res.data.products
           // 取得pagination資料
-          this.pagination = res.data.pagination
+          this.rooms_pagination = res.data.pagination
         } else {
           console.error('Error get rooms', res.data.message)
         }
@@ -87,7 +91,7 @@ export default defineStore('dashboard', {
           // 重新取得房間資料
           this.getRooms()
           // 吐司訊息
-          toast.toastSuccess('Delete Success','');
+          toast.toastSuccess('Delete Success', '');
         } else {
           console.log('Error delete room')
           // 吐司訊息
@@ -120,14 +124,85 @@ export default defineStore('dashboard', {
           // 將圖片連結更換成新上傳的圖片
           this.tempRoom.imageUrl = res.data.imageUrl
           // 吐司訊息
-          toast.toastSuccess('Update Success','');
+          toast.toastSuccess('Update Success', '');
         } else {
           console.log('Error upload img')
           // 吐司訊息
-          toast.toastFailed('Update Failed',res.data.message.join('、'));
+          toast.toastFailed('Update Failed', res.data.message.join('、'));
         }
       } catch (error) {
         console.log('Error upload img function', error)
+      } finally {
+        // 停止loading
+        loading.stopLoading();
+      }
+    },
+    // 取得訂單資料
+    async getOrders(page = 1) {
+      const loading = loadingStore()
+      // 先開始loading
+      loading.startLoading();
+      try {
+        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/orders/?page=${page}`
+        const res = await axios.get(api)
+        if (res.data.success == true) {
+          // 取得訂單資料
+          console.log('Successful get orders')
+          this.orders = res.data.orders
+          // 取得pagination資料
+          this.orders_pagination = res.data.pagination
+        } else {
+          console.error('Error get rooms', res.data.message)
+        }
+      } catch (error) {
+        console.error('Error get rooms function', error)
+      } finally {
+        // 停止loading
+        loading.stopLoading();
+      }
+    },
+    // 查看訂單更多資訊
+    async orderDetails(order) {
+      const modal = modalToggle()
+      try {
+        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/order/${order.id}`
+        const res = await axios.get(api)
+        if (res.data.success == true) {
+          console.log('Successful get orders')
+          // 取得訂單資料
+          this.orderDetailsData = res.data.order
+        } else {
+          console.error('Error get rooms', res.data.message)
+        }
+      } catch (error) {
+        console.error('Error get rooms function', error)
+      } finally {
+        // 彈跳視窗
+        modal.showModal();
+      }
+    },
+    // 刪除訂單
+    async deleteOrder(order) {
+      const loading = loadingStore()
+      const toast = toastStore()
+      // 先開始loading
+      loading.startLoading();
+      try {
+        const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/order/${order.id}`
+        const res = await axios.delete(api)
+        if (res.data.success == true) {
+          console.log('Successful delete order')
+          // 重新取得訂單資料
+          this.getOrders()
+          // 吐司訊息
+          toast.toastSuccess('Delete Success', '');
+        } else {
+          console.log('Error delete order')
+          // 吐司訊息
+          toast.toastFailed('Delete Failed');
+        }
+      } catch (error) {
+        console.log('Error delete function', error)
       } finally {
         // 停止loading
         loading.stopLoading();

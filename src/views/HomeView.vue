@@ -23,9 +23,6 @@ export default {
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
   },
-  created() {
-    console.log(import.meta.env.VITE_APP_API, import.meta.env.VITE_APP_PATH);
-  },
 }
 </script>
 
