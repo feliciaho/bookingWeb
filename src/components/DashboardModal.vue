@@ -70,6 +70,21 @@ export default {
           <!-- Row 3 -->
           <div class="modal-form_row">
             <div class="modal-form_group">
+              <label class="modal-form_label">Images URL</label>
+              <template v-for="(img, index) in tempRoom.imagesUrl" :key="index">
+                <input type="text" class="modal-form_input" placeholder="Enter image URL"
+                  v-model="tempRoom.imagesUrl[index]" />
+              </template>
+              <!-- <input type="text" class="modal-form_input" placeholder="Enter image URL"
+                v-model="tempRoom.imagesUrl" /> -->
+              <!-- <input type="text" class="modal-form_input" placeholder="Enter image URL"
+                v-model="tempRoom.imagesUrl[1]" /> -->
+            </div>
+          </div>
+
+          <!-- Row 4 -->
+          <div class="modal-form_row">
+            <div class="modal-form_group">
               <label class="modal-form_label">Original Price</label>
               <input type="number" class="modal-form_input" placeholder="Enter original price"
                 v-model="tempRoom.origin_price" />
@@ -107,7 +122,7 @@ export default {
     <!-- order modal -->
     <div class="modal-areaO" v-if="tabToggle === 'order'">
       <button class="modal-close" @click="closeModal">x</button>
-      <div class="modal-form" v-if="orderDetailsData.length > 0">
+      <div class="modal-form">
         <h2 class="modal-form_title">Oder Details</h2>
         <form class="modal-form_body">
           <!-- Row 1 -->

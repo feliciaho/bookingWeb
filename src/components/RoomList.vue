@@ -1,5 +1,7 @@
 <script>
 import { mapState, mapActions, mapWritableState } from 'pinia';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import roomsView from '@/stores/roomsView';
@@ -10,6 +12,8 @@ export default {
   name: 'RoomListCard',
   components: {
     Flatpickr,
+    Swiper,
+    SwiperSlide,
   },
   props: {
     book: {
@@ -105,17 +109,19 @@ export default {
     checkOut: 'validDate',
   },
   created() {
-    // 判斷是在roomsView還是在cart
-    if (!this.viewOrCart) {
-      this.getRoomsData();
-    }
+    this.getRoomsData();
   },
 }
 </script>
 <template>
   <!-- 判斷是在roomsView還是在cart -->
   <div class="room-card" v-for="(room, index) in this.viewOrCart ? roomData : cartData" :key="index">
-    <div :class="`room-card_image room-card_image-${this.viewOrCart ? room.unit : room.product.unit}`"></div>
+    <Swiper class="room-card_swiper">
+      <SwiperSlide
+      v-for="(img, index) in this.viewOrCart ? room.imagesUrl : room.product.imagesUrl" :key="index + 'image'">
+        <img :src="img" class="room-card_image" />
+      </SwiperSlide>
+    </Swiper>
     <div class="room-card_content">
       <div class="room-card_text">
         <h3 class="room-card_title">{{ this.viewOrCart ? room.title : room.product.title }}</h3>

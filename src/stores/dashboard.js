@@ -7,9 +7,12 @@ import toastStore from '@/stores/toastStore'
 export default defineStore('dashboard', {
   state: () => ({
     rooms: [],
-    order: [],
+    orders: [],
     orderDetailsData: {},
-    tempRoom: {},
+    tempRoom: {
+      // 一定要加，因為一開始沒有這個值，直接加上四個空值這樣才可以填寫input
+      imagesUrl: ['','','',''],
+    },
     newRoom: false,
     rooms_pagination: {},
     orders_pagination: {},
@@ -128,7 +131,7 @@ export default defineStore('dashboard', {
         } else {
           console.log('Error upload img')
           // 吐司訊息
-          toast.toastFailed('Update Failed', res.data.message.join('、'));
+          toast.toastFailed('Update Failed', res.data.message);
         }
       } catch (error) {
         console.log('Error upload img function', error)
@@ -152,10 +155,10 @@ export default defineStore('dashboard', {
           // 取得pagination資料
           this.orders_pagination = res.data.pagination
         } else {
-          console.error('Error get rooms', res.data.message)
+          console.error('Error get orders', res.data.message)
         }
       } catch (error) {
-        console.error('Error get rooms function', error)
+        console.error('Error get orders function', error)
       } finally {
         // 停止loading
         loading.stopLoading();
@@ -168,14 +171,14 @@ export default defineStore('dashboard', {
         const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/order/${order.id}`
         const res = await axios.get(api)
         if (res.data.success == true) {
-          console.log('Successful get orders')
+          console.log('Successful get orders Details')
           // 取得訂單資料
           this.orderDetailsData = res.data.order
         } else {
-          console.error('Error get rooms', res.data.message)
+          console.error('Error get orders Details', res.data.message)
         }
       } catch (error) {
-        console.error('Error get rooms function', error)
+        console.error('Error get orders Details function', error)
       } finally {
         // 彈跳視窗
         modal.showModal();

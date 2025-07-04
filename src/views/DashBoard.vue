@@ -20,12 +20,12 @@ export default {
   computed: {
     ...mapState(loadingStore, ['isloading']),
     ...mapState(modalToggle, ['modalToggleSet']),
-    ...mapWritableState(dashboard, ['rooms', 'tempRoom', 'newRoom', 'orders', 'tabToggle','orderDetailsData']),
+    ...mapWritableState(dashboard, ['rooms', 'tempRoom', 'newRoom', 'orders', 'tabToggle', 'orderDetailsData']),
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
     ...mapActions(modalToggle, ['showModal', 'closeModal']),
-    ...mapActions(dashboard, ['getRooms', 'deleteRoom', 'getOrders','deleteOrder','orderDetails']),
+    ...mapActions(dashboard, ['getRooms', 'deleteRoom', 'getOrders', 'deleteOrder', 'orderDetails']),
     // 驗證用者登入狀態
     async initDashboard() {
       try {
@@ -57,7 +57,17 @@ export default {
     addRoom(isNew, item) {
       // 如果不是新的資料則解構取得的資料顯示
       if (isNew === false) {
+        // 使用淺拷貝：複製 item 的所有屬性到 tempRoom
+        // 使用展開運算子避免直接修改原始 item
         this.tempRoom = { ...item };
+        // Array.isArray 用來檢查變數是否為陣列（Array），
+        // 如果不是陣列（例如 undefined、null、字串、物件等），就將它設定成空陣列 []，
+        // 這樣後面使用展開運算子（淺拷貝）才不會報錯。
+        if (!Array.isArray(item.imagesUrl)) {
+          item.imagesUrl = ['','','','']
+        }
+        // 使用淺拷貝確認imagesUrl不會被誤判成字串進行for迴圈，而是會被判斷為array
+        this.tempRoom.imagesUrl = [...item.imagesUrl]
         this.newRoom = false;
         // 如果是新的資料則重新回空值
       } else {
@@ -89,7 +99,9 @@ export default {
         <button class="room-table_btn room-table_btn-tab" @click="tabToggle = 'order'"
           :class="{ active: tabToggle === 'order' }">Order</button>
       </div>
-      <button class="room-table_btn room-table_btn-add" v-if="tabToggle === 'room'" @click="addRoom(true)">add room</button>
+      <!-- room -->
+      <button class="room-table_btn room-table_btn-add" v-if="tabToggle === 'room'" @click="addRoom(true)">add
+        room</button>
       <table class="room-table_area" v-if="tabToggle === 'room'">
         <thead class="room-table_head">
           <tr class="room-table_row">
@@ -114,6 +126,7 @@ export default {
           </tr>
         </tbody>
       </table>
+      <!-- order -->
       <table class="room-table_area" v-if="tabToggle === 'order'">
         <thead class="room-table_head">
           <tr class="room-table_row">

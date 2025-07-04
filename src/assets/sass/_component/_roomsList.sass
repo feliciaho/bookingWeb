@@ -18,32 +18,31 @@
       margin-bottom: 2rem
       height: auto
 
-    &_image
-      width: 35%
-      height: 330px
-      background-size: cover
-      background-position: center
-      &-214m2, &-300m2
-        background-image: url('@/assets/images/mountainRoom.jpg')
-      &-220m2 ,&-314m2
-        background-image: url('@/assets/images/poolRoom.jpg')
-      &-210m2 ,&-312m2
-        background-image: url('@/assets/images/tropicsRoom.jpg')
-      @include media-pcWide
-        height: 380px
+    &_swiper
+      position: relative
+      max-width: 500px
+      max-height: 700px
+      overflow: hidden
+      width: 100%
+      height: auto
+      z-index: 3
       @include media-sptb
-        width: 100%
-        height: 450px
+        max-width: unset
+        margin-bottom: -20px
 
     &_content
-      width: 65%
+      position: relative
+      max-width: 730px
+      width: 100%
       padding: 1.5rem
       background-color: $bg-light
       display: flex
       flex-direction: row
       justify-content: space-between
       box-sizing: border-box
+      z-index: 4
       @include media-sptb
+        max-width: unset
         width: 100%
         flex-direction: column
 
