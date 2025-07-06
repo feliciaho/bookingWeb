@@ -20,7 +20,10 @@
       display: flex
       gap: 1rem
       margin: 1rem 0rem
-      flex-wrap: wrap
+      position: absolute
+      @include media-narrow
+        flex-wrap: wrap
+        position: relative
 
   &_group
     display: flex

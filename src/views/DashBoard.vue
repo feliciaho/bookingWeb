@@ -116,7 +116,7 @@ export default {
             <td class="room-table_cell">{{ room.title }}</td>
             <td class="room-table_cell">${{ room.price }}.00 USD</td>
             <td class="room-table_cell">
-              <span class="room-table_status-able" v-if="room.is_enabled == 1">abled</span>
+              <span class="room-table_status-abled" v-if="room.is_enabled == 1">abled</span>
               <span class="room-table_status-enabled" v-else>enabled</span>
             </td>
             <td class="room-table_cell">
@@ -131,7 +131,7 @@ export default {
         <thead class="room-table_head">
           <tr class="room-table_row">
             <th class="room-table_header">customer</th>
-            <th class="room-table_header">paid</th>
+            <th class="room-table_header">status</th>
             <th class="room-table_header">order ID</th>
             <th class="room-table_header">order info</th>
           </tr>
@@ -141,9 +141,9 @@ export default {
             <td class="room-table_cell">{{ order.user.name }}</td>
             <td class="room-table_cell">
               <span class="room-table_status-enabled" v-if="order.is_paid == false">not paid</span>
-              <span class="room-table_status-able" v-else>paid</span>
+              <span class="room-table_status-abled" v-else>paid</span>
             </td>
-            <td class="room-table_cell">{{ order.id }}</td>
+            <td class="room-table_cell" style="white-space: nowrap">{{ order.id }}</td>
             <td class="room-table_cell">
               <button class="room-table_btn room-table_btn-edit" @click="orderDetails(order)">more</button>
               <button class="room-table_btn room-table_btn-delete" @click="deleteOrder(order)">delete</button>

@@ -36,10 +36,16 @@
         height: 20px
         margin-right: 0.5rem
 
+  &_swiper
+    position: relative
+    z-index: 3
+    margin-bottom: -5px
+
   &_price
     display: flex
     flex-direction: column
     align-items: flex-end
+
     &-night
       display: flex
       align-items: baseline
@@ -65,20 +71,12 @@
     background-color: $white
     overflow: hidden
     max-width: 400px
-
-    &_image
-      height: 400px
-      background-size: cover
-      background-position: center
-      &-214m2
-        background-image: url('@/assets/images/mountainRoom.jpg')
-      &-220m2
-        background-image: url('@/assets/images/poolRoom.jpg')
-      &-210m2
-        background-image: url('@/assets/images/tropicsRoom.jpg')
+    @include media-narrow
+      max-width: 270px
 
     &_content
-      padding: 2rem
+      position: relative
+      padding: 1.5rem
       background-color: $bg-light
       height: 100%
-
+      z-index: 4
