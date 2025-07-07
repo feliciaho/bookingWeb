@@ -112,7 +112,7 @@ export default {
     checkIn: 'validDate',
     checkOut: 'validDate',
   },
-  mounted() {
+  created() {
     // 如果在roomView的頁面才會一開始就取得roomsData
     if (this.viewOrBooking === true) {
       this.getRoomsData();

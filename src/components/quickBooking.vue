@@ -40,8 +40,8 @@ export default {
           this.toastFailed('Error Date', 'Please select both check-in and check-out dates.');
           return;
         }
-        // 如果房客人數大於2或臥室數量大於1，則設定類別為4，否則為2
-        if (this.guests > 2 || this.Beds > 1) {
+        // 如果房客人數大於2或，則設定類別為4，否則為2
+        if (this.guests > 2 ) {
           this.categoryData = 4;
         } else {
           this.categoryData = 2;
@@ -79,12 +79,6 @@ export default {
         <label><img src="@/assets/images/icon/guest.png">Guests</label>
         <select v-model="guests">
           <option v-for="n in 4" :key="n + 'guests'" :value="n">{{ n }}</option>
-        </select>
-      </div>
-      <div class="quick-booking_group">
-        <label><img src="@/assets/images/icon/bed.png">Total Beds</label>
-        <select v-model="Beds">
-          <option v-for="n in 2" :key="n + 'Beds'" :value="n">{{ n }} Bed{{ n > 1 ? 's' : '' }}</option>
         </select>
       </div>
       <div class="quick-booking_group">

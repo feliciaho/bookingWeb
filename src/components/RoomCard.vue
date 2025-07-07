@@ -26,7 +26,7 @@ export default {
       this.rooms = this.roomData.filter(room => room.category === "2");
     },
   },
-  async mounted() {
+  async created() {
     await this.getRoomsData();
     this.filterRooms();
   },
