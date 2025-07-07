@@ -3,7 +3,7 @@ import { mapActions, mapState } from 'pinia';
 import BookingStep from '@/components/BookingStep.vue';
 import ToastCom from '@/components/ToastCom.vue';
 import loadingStore from '@/stores/loadingStore'
-import userCart from '@/stores/userCart';
+import bookingStore from '@/stores/bookingStore';
 import toast from '@/stores/toastStore';
 import axios from 'axios';
 
@@ -27,7 +27,7 @@ export default {
   }),
   computed: {
     ...mapState(loadingStore, ['isloading']),
-    ...mapState(userCart, ['checkIn', 'checkOut']),
+    ...mapState(bookingStore, ['checkIn', 'checkOut']),
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
@@ -73,7 +73,7 @@ export default {
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
   <ToastCom />
-  <main class="cart-step_2">
+  <main class="booking-step_2">
     <section class="booking-form">
       <BookingStep :stepActive="2" />
       <form class="booking-form_area" @submit.prevent="addOrder()">

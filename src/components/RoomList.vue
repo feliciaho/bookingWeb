@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import roomsView from '@/stores/roomsView';
-import userCart from '@/stores/userCart';
+import bookingStore from '@/stores/bookingStore';
 import toast from '@/stores/toastStore';
 
 export default {
@@ -23,7 +23,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    viewOrCart: {
+    viewOrBooking: {
       type: Boolean,
       default: true,
     },
@@ -39,7 +39,7 @@ export default {
   }),
   computed: {
     ...mapState(roomsView, ['roomData']),
-    ...mapWritableState(userCart, ['cartData', 'checkIn', 'checkOut']),
+    ...mapWritableState(bookingStore, ['BookingData', 'checkIn', 'checkOut']),
     // 計算入住天數
     stayNights() {
       if (this.checkIn && this.checkOut) {
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
-    ...mapActions(userCart, ['addCart', 'getCart', 'removeCart', 'updateCart']),
+    ...mapActions(bookingStore, ['addBooking', 'getBooking', 'removeBooking', 'updateBooking']),
     ...mapActions(toast, ['toastFailed']),
     // 驗證日期入住日不能大於退房日
     validDate() {
@@ -78,8 +78,8 @@ export default {
           this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
-        // 呼叫addCart方法，傳入房間ID和入住天數
-        await this.addCart(roomId, stayNights);
+        // 呼叫addBooking方法，傳入房間ID和入住天數
+        await this.addBooking(roomId, stayNights);
         // 成功後導向到購物車步驟1
         this.$router.push('/booking/stepView1');
       } catch (error) {
@@ -96,8 +96,8 @@ export default {
           this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
-        // 呼叫addCart方法，傳入房間ID和入住天數
-        await this.updateCart(roomId, stayNights);
+        // 呼叫addBooking方法，傳入房間ID和入住天數
+        await this.updateBooking(roomId, stayNights);
         // 成功後導向到購物車步驟1
       } catch (error) {
         console.error('Error booking room', error);
@@ -112,37 +112,40 @@ export default {
     checkIn: 'validDate',
     checkOut: 'validDate',
   },
-  created() {
-    this.getRoomsData();
+  mounted() {
+    // 如果在roomView的頁面才會一開始就取得roomsData
+    if (this.viewOrBooking === true) {
+      this.getRoomsData();
+    }
   },
 }
 </script>
 <template>
-  <!-- 判斷是在roomsView還是在cart -->
-  <div class="room-card" v-for="(room, index) in this.viewOrCart ? roomData : cartData" :key="index">
+  <!-- 判斷是在roomsView還是在bookingStep1 -->
+  <div class="room-card" v-for="(room, index) in this.viewOrBooking ? roomData : BookingData" :key="index">
     <Swiper class="room-card_swiper" :pagination="true" :modules="swiperModules">
-      <SwiperSlide v-for="(img, index) in this.viewOrCart ? room.imagesUrl : room.product.imagesUrl"
+      <SwiperSlide v-for="(img, index) in this.viewOrBooking ? room.imagesUrl : room.product.imagesUrl"
         :key="index + 'image'">
         <img :src="img" class="room-card_image" />
       </SwiperSlide>
     </Swiper>
     <div class="room-card_content">
       <div class="room-card_text">
-        <h3 class="room-card_title">{{ this.viewOrCart ? room.title : room.product.title }}</h3>
-        <p class="room-card_description">{{ this.viewOrCart ? room.description : room.product.description }}</p>
+        <h3 class="room-card_title">{{ this.viewOrBooking ? room.title : room.product.title }}</h3>
+        <p class="room-card_description">{{ this.viewOrBooking ? room.description : room.product.description }}</p>
         <div class="room-card_info">
           <span>
             <img src="@/assets/images/icon/bed.png">
-            {{ viewOrCart ? room.category / 2 : room.product.category / 2 }} bedroom{{ (viewOrCart ? room.category :
+            {{ viewOrBooking ? room.category / 2 : room.product.category / 2 }} Bed{{ (viewOrBooking ? room.category :
               room.product.category) > 2 ? 's' : '' }}
           </span>
           <span>
             <img src="@/assets/images/icon/guest.png">
-            {{ this.viewOrCart ? room.category : room.product.category }} guests(maximum)
+            {{ this.viewOrBooking ? room.category : room.product.category }} guests(maximum)
           </span>
           <span>
             <img src="@/assets/images/icon/area.png">
-            {{ this.viewOrCart ? room.unit : room.product.unit }}
+            {{ this.viewOrBooking ? room.unit : room.product.unit }}
           </span>
           <span>
             <img src="@/assets/images/icon/shower.png">
@@ -152,11 +155,11 @@ export default {
         <div class="room-card_facilities">Available Facilities:
           <!-- 用split將回傳的字串轉成陣列 -->
           <ul>
-            <li v-for="(facility, index) in this.viewOrCart ? room.content.split(',') : room.product.content.split(',')"
+            <li v-for="(facility, index) in this.viewOrBooking ? room.content.split(',') : room.product.content.split(',')"
               :key="index + 'facilities'">{{ facility }}</li>
           </ul>
         </div>
-        <div class="quick-booking_form-room" v-if="!viewOrCart">
+        <div class="quick-booking_form-room" v-if="!viewOrBooking">
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check in</label>
             <Flatpickr v-model="this.checkIn" :config="dateOptions" placeholder="Select date"
@@ -172,13 +175,13 @@ export default {
       <div class="room-card_butArea">
         <div class="room-card_price">
           <div class="room-card_price-night">
-            <span class="price">${{ this.viewOrCart ? room.origin_price : room.product.origin_price }}.00</span>
+            <span class="price">${{ this.viewOrBooking ? room.origin_price : room.product.origin_price }}.00</span>
             <span class="currency"> USD</span>
           </div>
           <span class="currency">price/per night</span>
         </div>
         <div class="room-card_button">
-          <!-- addCart 帶入房間id跟stayNights計算過後的天數 -->
+          <!-- addBooking 帶入房間id跟stayNights計算過後的天數 -->
           <button class="room-card_button-add common-button" @click="bookRoom(room.id, stayNights)" v-if="book">Book
             Now</button>
         </div>

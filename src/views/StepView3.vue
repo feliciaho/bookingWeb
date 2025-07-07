@@ -69,7 +69,7 @@ export default {
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
   <ToastCom/>
-  <main class="cart-step_3">
+  <main class="booking-step_3">
     <section class="booking-complete">
       <BookingStep :stepActive="3" />
       <div class="booking-complete_area">

@@ -1,8 +1,7 @@
-# Options API
 <script>
 import { mapActions, mapWritableState } from 'pinia'
 import roomsView from '@/stores/roomsView';
-import userCart from '@/stores/userCart';
+import bookingStore from '@/stores/bookingStore';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import toast from '@/stores/toastStore';
@@ -14,7 +13,7 @@ export default {
   },
   data: () => ({
     guests: 1,
-    bedrooms: 1,
+    Beds: 1,
     dateOptions: {
       dateFormat: 'Y-m-d',
       minDate: 'today',
@@ -28,7 +27,7 @@ export default {
   }),
   computed: {
     ...mapWritableState(roomsView, ['categoryData']),
-    ...mapWritableState(userCart, ['checkIn', 'checkOut']),
+    ...mapWritableState(bookingStore, ['checkIn', 'checkOut']),
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
@@ -42,7 +41,7 @@ export default {
           return;
         }
         // 如果房客人數大於2或臥室數量大於1，則設定類別為4，否則為2
-        if (this.guests > 2 || this.bedrooms > 1) {
+        if (this.guests > 2 || this.Beds > 1) {
           this.categoryData = 4;
         } else {
           this.categoryData = 2;
@@ -83,9 +82,9 @@ export default {
         </select>
       </div>
       <div class="quick-booking_group">
-        <label><img src="@/assets/images/icon/bed.png">Total Bedrooms</label>
-        <select v-model="bedrooms">
-          <option v-for="n in 2" :key="n + 'bedrooms'" :value="n">{{ n }} Bedroom{{ n > 1 ? 's' : '' }}</option>
+        <label><img src="@/assets/images/icon/bed.png">Total Beds</label>
+        <select v-model="Beds">
+          <option v-for="n in 2" :key="n + 'Beds'" :value="n">{{ n }} Bed{{ n > 1 ? 's' : '' }}</option>
         </select>
       </div>
       <div class="quick-booking_group">

@@ -5,7 +5,7 @@ import ToastCom from '@/components/ToastCom.vue';
 import toast from '@/stores/toastStore';
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
-import userCart from '@/stores/userCart';
+import bookingStore from '@/stores/bookingStore';
 
 export default {
   name: 'BookingStep1',
@@ -16,7 +16,7 @@ export default {
   },
   data: () => ({
     guests: 1,
-    bedrooms: 1,
+    Beds: 1,
     dateOptions: {
       dateFormat: 'Y-m-d',
       minDate: 'today',
@@ -25,11 +25,11 @@ export default {
   }),
   computed: {
     ...mapState(loadingStore, ['isloading']),
-    ...mapState(userCart, ['cartData', 'checkIn', 'checkOut']),
+    ...mapState(bookingStore, ['BookingData', 'checkIn', 'checkOut']),
   },
   methods: {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
-    ...mapActions(userCart, ['removeCart', 'getCart']),
+    ...mapActions(bookingStore, ['removeBooking', 'getBooking']),
     ...mapActions(toast, ['toastFailed']),
     refreshCheck() {
       // 偵測是否有重整頁面,因為date會變回空值,如果有則顯示錯誤訊息並返回booking頁面
@@ -43,23 +43,20 @@ export default {
   mounted() {
     this.refreshCheck();
   },
-  created() {
-    this.getCart();
-  }
 }
 </script>
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
   <ToastCom />
-  <main class="cart-step_1">
+  <main class="booking-step_1">
     <section class="booking-summary">
       <BookingStep :stepActive="1" />
       <!-- Room Section -->
       <div class="rooms_list">
-        <RoomList :book="false" :viewOrCart="false" />
+        <RoomList :book="false" :viewOrBooking="false" />
       </div>
       <!-- Booking Summary Section -->
-      <div class="booking-summary_area" v-for="(item, index) in cartData" :key="index">
+      <div class="booking-summary_area" v-for="(item, index) in BookingData" :key="index">
         <div class="booking-summary_list">
           <h2 class="booking-summary_title common-title">Booking Summary</h2>
           <div class="booking-summary_info-area">

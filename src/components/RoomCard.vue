@@ -42,7 +42,7 @@ export default {
     <div class="rooms_grid">
       <!-- Mountain View Room -->
       <div class="room-card" v-for="(room, index) in rooms" :key="index">
-        <Swiper class="room-card_swiper" :modules="swiperModules" :pagination="true">
+        <Swiper class="room-card_swiper" :modules="swiperModules" :pagination="true" >
           <SwiperSlide v-for="(img, index) in room.imagesUrl" :key="'img'+index">
             <img :src="img" class="room-card_image"/>
           </SwiperSlide>
@@ -54,7 +54,7 @@ export default {
           <div class="room-card_info">
             <span>
               <img src="@/assets/images/icon/bed.png">
-              {{ room.category / 2 }} bedroom
+              {{ room.category / 2 }} Bed
             </span>
             <span>
               <img src="@/assets/images/icon/area.png">

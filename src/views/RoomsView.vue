@@ -40,7 +40,7 @@ export default {
       <QuickBooking />
       <!-- Room Section -->
       <div class="rooms_list">
-        <RoomList :book="true" :viewOrCart="true" />
+        <RoomList :book="true" :viewOrBooking="true" />
       </div>
     </section>
   </main>
