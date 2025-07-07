@@ -1,7 +1,9 @@
 <script>
 import { mapState, mapActions, mapWritableState } from 'pinia';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Pagination } from 'swiper/modules'
 import 'swiper/css';
+import 'swiper/css/pagination';
 import Flatpickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import roomsView from '@/stores/roomsView';
@@ -15,6 +17,7 @@ export default {
     Swiper,
     SwiperSlide,
   },
+  // modules: [ Autoplay,Pagination, Navigation] ,
   props: {
     book: {
       type: Boolean,
@@ -32,6 +35,7 @@ export default {
       enableTime: false,
     },
     validDateSet: true,
+    swiperModules: [Pagination]
   }),
   computed: {
     ...mapState(roomsView, ['roomData']),
@@ -116,9 +120,9 @@ export default {
 <template>
   <!-- 判斷是在roomsView還是在cart -->
   <div class="room-card" v-for="(room, index) in this.viewOrCart ? roomData : cartData" :key="index">
-    <Swiper class="room-card_swiper">
-      <SwiperSlide
-      v-for="(img, index) in this.viewOrCart ? room.imagesUrl : room.product.imagesUrl" :key="index + 'image'">
+    <Swiper class="room-card_swiper" :pagination="true" :modules="swiperModules">
+      <SwiperSlide v-for="(img, index) in this.viewOrCart ? room.imagesUrl : room.product.imagesUrl"
+        :key="index + 'image'">
         <img :src="img" class="room-card_image" />
       </SwiperSlide>
     </Swiper>

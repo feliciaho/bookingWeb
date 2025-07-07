@@ -71,7 +71,10 @@ export default {
         this.newRoom = false;
         // 如果是新的資料則重新回空值
       } else {
-        this.tempRoom = {};
+        this.tempRoom = {
+          // 一定要加，因為一開始沒有這個值，直接加上四個空值這樣才可以填寫input
+          imagesUrl: ['','','',''],
+        };
         this.newRoom = true;
       };
       // 彈跳視窗

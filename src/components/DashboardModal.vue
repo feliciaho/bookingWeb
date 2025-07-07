@@ -75,10 +75,6 @@ export default {
                 <input type="text" class="modal-form_input" placeholder="Enter image URL"
                   v-model="tempRoom.imagesUrl[index]" />
               </template>
-              <!-- <input type="text" class="modal-form_input" placeholder="Enter image URL"
-                v-model="tempRoom.imagesUrl" /> -->
-              <!-- <input type="text" class="modal-form_input" placeholder="Enter image URL"
-                v-model="tempRoom.imagesUrl[1]" /> -->
             </div>
           </div>
 
