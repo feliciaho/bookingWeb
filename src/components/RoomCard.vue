@@ -1,17 +1,11 @@
 <script>
 import { mapState, mapActions } from 'pinia';
-import{ Swiper, SwiperSlide} from 'swiper/vue';
 import{ Pagination }from 'swiper/modules'
-import 'swiper/css';
-import 'swiper/css/pagination';
 import roomsView from '@/stores/roomsView';
 
 export default {
   name: 'RoomCard',
-  components:{
-    Swiper,
-    SwiperSlide
-  },
+
   data: () => ({
     rooms: [],
     swiperModules: [Pagination]
@@ -42,11 +36,11 @@ export default {
     <div class="rooms_grid">
       <!-- Mountain View Room -->
       <div class="room-card" v-for="(room, index) in rooms" :key="index">
-        <Swiper class="room-card_swiper" :modules="swiperModules" :pagination="true" >
+        <AppSwiper class="room-card_swiper" :modules="swiperModules" :pagination="true" >
           <SwiperSlide v-for="(img, index) in room.imagesUrl" :key="'img'+index">
             <img :src="img" class="room-card_image"/>
           </SwiperSlide>
-        </Swiper>
+        </AppSwiper>
         <!-- <div :class="`room-card_image room-card_image-${room.unit}`"></div> -->
         <div class="room-card_content">
           <h3 class="room-card_title">{{ room.title }}</h3>
