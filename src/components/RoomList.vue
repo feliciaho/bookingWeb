@@ -84,15 +84,16 @@ export default {
       }
     },
     // 更新房間資訊
-    async updateRoom(roomId, stayNights) {
+    async updateRoom(roomId) {
       try {
+        const nights = this.stayNights;
         //如果沒有選擇日期則return
         if (!this.checkIn || !this.checkOut || !this.validDateSet) {
           this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
         // 呼叫addBooking方法，傳入房間ID和入住天數
-        await this.updateBooking(roomId, stayNights);
+        await this.updateBooking(roomId, nights);
         // 成功後導向到購物車步驟1
       } catch (error) {
         console.error('Error booking room', error);
@@ -158,12 +159,12 @@ export default {
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check in</label>
             <Flatpickr v-model="this.checkIn" :config="dateOptions" placeholder="Select date"
-              @change="updateRoom(room.id, stayNights)"></Flatpickr>
+              @change="updateRoom(room.id)"></Flatpickr>
           </div>
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check Out</label>
             <Flatpickr v-model="this.checkOut" :config="dateOptions" placeholder="Select date"
-              @change="updateRoom(room.id, stayNights)"></Flatpickr>
+              @change="updateRoom(room.id)"></Flatpickr>
           </div>
         </div>
       </div>
