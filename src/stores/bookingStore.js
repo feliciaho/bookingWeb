@@ -8,6 +8,7 @@ export default defineStore('bookingStore', {
     BookingData: [],
     checkIn: null,
     checkOut: null,
+    guests: 1,
   }),
   actions: {
     // 加入訂單

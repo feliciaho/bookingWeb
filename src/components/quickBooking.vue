@@ -12,8 +12,6 @@ export default {
     Flatpickr,
   },
   data: () => ({
-    guests: 1,
-    Beds: 1,
     dateOptions: {
       dateFormat: 'Y-m-d',
       minDate: 'today',
@@ -27,7 +25,7 @@ export default {
   }),
   computed: {
     ...mapWritableState(roomsView, ['categoryData']),
-    ...mapWritableState(bookingStore, ['checkIn', 'checkOut']),
+    ...mapWritableState(bookingStore, ['guests','checkIn', 'checkOut']),
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
@@ -77,8 +75,8 @@ export default {
     <div class="quick-booking_form">
       <div class="quick-booking_group">
         <label><img src="@/assets/images/icon/guest.png">Guests</label>
-        <select v-model="guests">
-          <option v-for="n in 4" :key="n + 'guests'" :value="n">{{ n }}</option>
+        <select v-model="this.guests">
+          <option v-for="n in 4" :key="n + 'guests'" :value="n" >{{ n }}</option>
         </select>
       </div>
       <div class="quick-booking_group">

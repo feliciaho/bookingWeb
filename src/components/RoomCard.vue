@@ -21,10 +21,10 @@ export default {
   },
   methods: {
     ...mapActions(roomsView, ['getRoomsData']),
-    // 過濾房間資料，只顯示類別為2的房間
+    // 過濾房間資料，只顯示前三筆
     filterRooms() {
-      this.rooms = this.roomData.filter(room => room.category === "2");
-    },
+      this.rooms = this.roomData.slice(0, 3);
+    }
   },
   async created() {
     await this.getRoomsData();

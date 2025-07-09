@@ -6,12 +6,47 @@ import loadingStore from '@/stores/loadingStore'
 import bookingStore from '@/stores/bookingStore';
 import toast from '@/stores/toastStore';
 import axios from 'axios';
+import { Form, Field, ErrorMessage, defineRule, configure } from 'vee-validate'
+import { required, email } from '@vee-validate/rules'
+
+defineRule('required', required)
+defineRule('email', email)
+// 設定電話驗證規則
+defineRule('tel', value => {
+  if (!value || value.trim() === '') return 'Phone number is required.'
+  const isValid = /^\+?[1-9]\d{6,14}$/.test(value.replace(/[\s-]/g, ''))
+  return isValid ? true : 'Please enter a valid international phone number.'
+});
+// 設定自訂錯誤訊息顯示名稱
+configure({
+  generateMessage: (ctx) => {
+    const fieldNames = {
+      'form.user.name': 'Name',
+      'form.user.email': 'Email',
+      'form.user.tel': 'Phone Number',
+      'form.user.payment': 'Payment method'
+    }
+
+    const field = fieldNames[ctx.field] || ctx.field
+
+    const messages = {
+      required: `${field} is required.`,
+      email: `${field} must be a valid email.`,
+      tel: `${field} must be a valid international phone number.`
+    }
+
+    return messages[ctx.rule.name] || `${field} is invalid.`
+  }
+})
 
 export default {
   name: 'BookingStep2',
   components: {
     BookingStep,
-    ToastCom
+    ToastCom,
+    Form,
+    Field,
+    ErrorMessage
   },
   data: () => ({
     form: {
@@ -19,6 +54,7 @@ export default {
         name: '',
         email: '',
         tel: '',
+        payment: '',
         // 將入住和退房日期加入地址欄位
         address: ``,
       },
@@ -33,7 +69,8 @@ export default {
     ...mapActions(loadingStore, ['startLoading', 'stopLoading']),
     ...mapActions(toast, ['toastFailed']),
     // 新增訂單
-    async addOrder() {
+    // values是veeValidate的參數
+    async addOrder(values) {
       this.startLoading();
       try {
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/order`
@@ -44,11 +81,9 @@ export default {
           this.$router.push(`/booking/stepView3/${res.data.orderId}`);
         } else {
           console.error('Error add order', res.data.message)
-          this.toastFailed('Error fields', res.data.message);
         }
       } catch (error) {
         console.error('Error addOrder function', error)
-        this.toastFailed('Error fields', 'Please fill in all fields.');
       } finally {
         this.stopLoading();
       }
@@ -76,29 +111,34 @@ export default {
   <main class="booking-step_2">
     <section class="booking-form">
       <BookingStep :stepActive="2" />
-      <form class="booking-form_area" @submit.prevent="addOrder()">
+      <Form class="booking-form_area" @submit="addOrder()">
         <div class="booking-form_group">
           <label for="name" class="booking-form_label">Full Name</label>
-          <input type="text" id="name" v-model="form.user.name" class="booking-form_input"
-            placeholder="Enter your name (as per passport)">
+          <Field type="text" id="name" name="form.user.name" rules="required" v-model="form.user.name"
+            class="booking-form_input" placeholder="Enter your name (as per passport)" />
+          <ErrorMessage name="form.user.name" class="invalid" />
         </div>
         <div class="booking-form_group">
           <label for="email" class="booking-form_label">Email Address</label>
-          <input type="email" id="email" v-model="form.user.email" class="booking-form_input"
-            placeholder="Enter your email">
+          <Field type="email" id="email" name="form.user.email" rules="required|email" v-model="form.user.email"
+            class="booking-form_input" placeholder="Enter your email" />
+          <ErrorMessage name="form.user.email" class="invalid" />
         </div>
         <div class="booking-form_group">
           <label for="phone" class="booking-form_label">Phone Number</label>
-          <input type="tel" id="tel" v-model="form.user.tel" class="booking-form_input"
-            placeholder="Enter your contact number">
+          <Field type="tel" id="tel" name="form.user.tel" rules="required|tel" v-model="form.user.tel"
+            class="booking-form_input" placeholder="Enter your contact number" />
+          <ErrorMessage name="form.user.tel" class="invalid" />
         </div>
         <div class="booking-form_group">
           <label for="payment" class="booking-form_label">Payment Method</label>
-          <select id="payment" class="booking-form_input">
+          <Field as="select" id="payment" name="form.user.payment" rules="required" v-model="form.user.payment"
+            class="booking-form_input">
             <option disabled value="">Please select a payment method</option>
             <option value="credit_card">Credit Card</option>
             <option value="cash">Apple Pay</option>
-          </select>
+          </Field>
+          <ErrorMessage name="form.user.payment" class="invalid" />
         </div>
         <div class="booking-form_group">
           <label for="requests" class="booking-form_label">Special Requests</label>
@@ -110,7 +150,7 @@ export default {
             Next Step
           </button>
         </div>
-      </form>
+      </Form>
     </section>
   </main>
 </template>
