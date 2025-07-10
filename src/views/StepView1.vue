@@ -87,11 +87,11 @@ export default {
             <span class="pernight">total price</span>
           </div>
           <div class="booking-summary_button-area">
-            <button type="button" v-if="this.checkIn && this.checkOut" class="booking-summary_button common-button">
-              <RouterLink to="/booking/stepView2">
-              </RouterLink>
-              Next Step
-            </button>
+            <RouterLink to="/booking/stepView2">
+              <button type="button" v-if="this.checkIn && this.checkOut" class="booking-summary_button common-button">
+                Next Step
+              </button>
+            </RouterLink>
           </div>
         </div>
       </div>

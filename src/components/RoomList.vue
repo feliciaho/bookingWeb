@@ -30,7 +30,7 @@ export default {
       enableTime: false,
     },
     validDateSet: true,
-    swiperModules: [Pagination]
+    swiperModules: [Pagination],
   }),
   computed: {
     ...mapState(roomsView, ['roomData']),
@@ -86,14 +86,15 @@ export default {
     // 更新房間資訊
     async updateRoom(roomId) {
       try {
-        const nights = this.stayNights;
         //如果沒有選擇日期則return
         if (!this.checkIn || !this.checkOut || !this.validDateSet) {
           this.toastFailed('Error Date', 'Please check dates.');
           return;
         }
-        // 呼叫addBooking方法，傳入房間ID和入住天數
-        await this.updateBooking(roomId, nights);
+        // 儲存一個變數，將變數當成參數傳入updateBooking
+        let nightsData = this.stayNights;
+        // 呼叫updateBooking方法，傳入房間ID和入住天數
+        await this.updateBooking(roomId, nightsData);
         // 成功後導向到購物車步驟1
       } catch (error) {
         console.error('Error booking room', error);
@@ -105,8 +106,12 @@ export default {
   // 監聽日期變化
   watch: {
     // 當checkIn或checkOut變化時，呼叫validDate方法
-    checkIn: 'validDate',
-    checkOut: 'validDate',
+    checkIn() {
+      this.validDate();
+    },
+    checkOut() {
+      this.validDate();
+    },
   },
   created() {
     // 如果在roomView的頁面才會一開始就取得roomsData
@@ -151,20 +156,19 @@ export default {
         <div class="room-card_facilities">Available Facilities:
           <!-- 用split將回傳的字串轉成陣列 -->
           <ul>
-            <li v-for="(facility, index) in this.viewOrBooking ? room.content.split(',') : room.product.content.split(',')"
+            <li
+              v-for="(facility, index) in this.viewOrBooking ? room.content.split(',') : room.product.content.split(',')"
               :key="index + 'facilities'">{{ facility }}</li>
           </ul>
         </div>
         <div class="quick-booking_form-room" v-if="!viewOrBooking">
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check in</label>
-            <Flatpickr v-model="this.checkIn" :config="dateOptions" placeholder="Select date"
-              @change="updateRoom(room.id)"></Flatpickr>
+            <Flatpickr @change="updateRoom(room.id)" v-model="this.checkIn" :config="dateOptions" placeholder="Select date"></Flatpickr>
           </div>
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check Out</label>
-            <Flatpickr v-model="this.checkOut" :config="dateOptions" placeholder="Select date"
-              @change="updateRoom(room.id)"></Flatpickr>
+            <Flatpickr @change="updateRoom(room.id)" v-model="this.checkOut" :config="dateOptions" placeholder="Select date"></Flatpickr>
           </div>
         </div>
       </div>

@@ -69,6 +69,8 @@ export default defineStore('bookingStore', {
         }
       } catch (error) {
         console.error('Error updateRoom function', error)
+      }finally{
+        loading.stopLoading();
       }
     },
     // 取得訂單資料

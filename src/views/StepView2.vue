@@ -35,7 +35,7 @@ configure({
       tel: `${field} must be a valid international phone number.`
     }
 
-    return messages[ctx.rule.name] || `${field} is invalid.`
+    return messages[ctx.rule.name] 
   }
 })
 
@@ -127,7 +127,7 @@ export default {
         <div class="booking-form_group">
           <label for="phone" class="booking-form_label">Phone Number</label>
           <Field type="tel" id="tel" name="form.user.tel" rules="required|tel" v-model="form.user.tel"
-            class="booking-form_input" placeholder="Enter your contact number" />
+            class="booking-form_input" placeholder="Enter your contact number (EX:+886975925667)" />
           <ErrorMessage name="form.user.tel" class="invalid" />
         </div>
         <div class="booking-form_group">
