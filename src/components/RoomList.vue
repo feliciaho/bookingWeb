@@ -84,17 +84,17 @@ export default {
       }
     },
     // 更新房間資訊
-    async updateRoom(roomId) {
+    async updateRoom(roomId, stayNights) {
+      // 確保checkIn checkOut 的v-model 已經更新,否則會寄到上一筆的日期然後執行updateBooking
+      await this.$nextTick();
+      //如果沒有選擇日期則return
+      if (!this.checkIn || !this.checkOut || !this.validDateSet) {
+        this.toastFailed('Error Date', 'Please check dates.');
+        return;
+      }
       try {
-        //如果沒有選擇日期則return
-        if (!this.checkIn || !this.checkOut || !this.validDateSet) {
-          this.toastFailed('Error Date', 'Please check dates.');
-          return;
-        }
-        // 儲存一個變數，將變數當成參數傳入updateBooking
-        let nightsData = this.stayNights;
         // 呼叫updateBooking方法，傳入房間ID和入住天數
-        await this.updateBooking(roomId, nightsData);
+        await this.updateBooking(roomId, stayNights);
         // 成功後導向到購物車步驟1
       } catch (error) {
         console.error('Error booking room', error);
@@ -164,11 +164,13 @@ export default {
         <div class="quick-booking_form-room" v-if="!viewOrBooking">
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check in</label>
-            <Flatpickr @change="updateRoom(room.id)" v-model="this.checkIn" :config="dateOptions" placeholder="Select date"></Flatpickr>
+            <Flatpickr @change="updateRoom(room.id, stayNights)" v-model="this.checkIn" :config="dateOptions"
+              placeholder="Select date"></Flatpickr>
           </div>
           <div class="quick-booking_group">
             <label><img src="@/assets/images/icon/date.png">Check Out</label>
-            <Flatpickr @change="updateRoom(room.id)" v-model="this.checkOut" :config="dateOptions" placeholder="Select date"></Flatpickr>
+            <Flatpickr @change="updateRoom(room.id, stayNights)" v-model="this.checkOut" :config="dateOptions"
+              placeholder="Select date"></Flatpickr>
           </div>
         </div>
       </div>
