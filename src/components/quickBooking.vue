@@ -74,18 +74,18 @@ export default {
   <section class="quick-booking">
     <div class="quick-booking_form">
       <div class="quick-booking_group">
-        <label><img src="@/assets/images/icon/guest.png">Guests</label>
-        <select v-model="this.guests">
-          <option v-for="n in 4" :key="n + 'guests'" :value="n" >{{ n }}</option>
-        </select>
-      </div>
-      <div class="quick-booking_group">
         <label><img src="@/assets/images/icon/date.png">Check in</label>
         <Flatpickr v-model="this.checkIn" :config="dateOptions" placeholder="Select date" />
       </div>
       <div class="quick-booking_group">
         <label><img src="@/assets/images/icon/date.png">Check out</label>
         <Flatpickr v-model="this.checkOut" :config="dateOptions" placeholder="Select date" />
+      </div>
+      <div class="quick-booking_group">
+        <label><img src="@/assets/images/icon/guest.png">Guests</label>
+        <select v-model="this.guests">
+          <option v-for="n in 4" :key="n + 'guests'" :value="n" >{{ n }}</option>
+        </select>
       </div>
       <button class="quick-booking_button common-button" @click="search()">Search</button>
     </div>
