@@ -1,7 +1,6 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import BookingStep from '@/components/BookingStep.vue';
-import ToastCom from '@/components/ToastCom.vue';
 import loadingStore from '@/stores/loadingStore'
 import bookingStore from '@/stores/bookingStore';
 import toast from '@/stores/toastStore';
@@ -35,7 +34,7 @@ configure({
       tel: `${field} must be a valid international phone number.`
     }
 
-    return messages[ctx.rule.name] 
+    return messages[ctx.rule.name]
   }
 })
 
@@ -43,7 +42,6 @@ export default {
   name: 'BookingStep2',
   components: {
     BookingStep,
-    ToastCom,
     Form,
     Field,
     ErrorMessage
@@ -77,10 +75,7 @@ export default {
         const order = this.form;
         const res = await axios.post(api, { data: order })
         if (res.data.success == true) {
-          console.log('Successful add order')
           this.$router.push(`/booking/stepView3/${res.data.orderId}`);
-        } else {
-          console.error('Error add order', res.data.message)
         }
       } catch (error) {
         console.error('Error addOrder function', error)
@@ -107,11 +102,10 @@ export default {
 </script>
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
-  <ToastCom />
   <main class="booking-step_2">
     <section class="booking-form">
       <BookingStep :stepActive="2" />
-      <Form class="booking-form_area" @submit="addOrder()">
+      <Form class="booking-form_area" @submit="addOrder">
         <div class="booking-form_group">
           <label for="name" class="booking-form_label">Full Name</label>
           <Field type="text" id="name" name="form.user.name" rules="required" v-model="form.user.name"

@@ -194,13 +194,11 @@ export default defineStore('dashboard', {
         const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/order/${order.id}`
         const res = await axios.delete(api)
         if (res.data.success == true) {
-          console.log('Successful delete order')
           // 重新取得訂單資料
           this.getOrders()
           // 吐司訊息
           toast.toastSuccess('Delete Success', '');
         } else {
-          console.log('Error delete order')
           // 吐司訊息
           toast.toastFailed('Delete Failed');
         }

@@ -1,7 +1,6 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import loadingStore from '@/stores/loadingStore';
-import ToastCom from '@/components/ToastCom.vue';
 import toast from '@/stores/toastStore';
 import BookingStep from '@/components/BookingStep.vue';
 import RoomList from '@/components/RoomList.vue';
@@ -12,7 +11,6 @@ export default {
   components: {
     BookingStep,
     RoomList,
-    ToastCom
   },
   data: () => ({
     guests: 1,
@@ -47,7 +45,6 @@ export default {
 </script>
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
-  <ToastCom />
   <main class="booking-step_1">
     <section class="booking-summary">
       <BookingStep :stepActive="1" />

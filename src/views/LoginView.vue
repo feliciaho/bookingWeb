@@ -14,13 +14,11 @@ export default {
         const api = `${import.meta.env.VITE_APP_API}admin/signin`
         const res = await this.axios.post(api, this.user)
         if (res.data.success === true) {
-          console.log('Login successful');
           const { token, expired } = res.data;
           document.cookie = `hexToken =${token}; expires=${new Date(expired)}`;
           // 驗證正確跳轉後台畫面
           this.$router.push('/dashBoard');
         } else {
-          console.error( 'Login failed:', res.data.message);
           // 如果登入失敗，則清空使用者資料
           this.user.username = '';
           this.user.password = '';

@@ -2,7 +2,6 @@
 import { mapActions, mapState } from 'pinia';
 import BookingStep from '@/components/BookingStep.vue';
 import loadingStore from '@/stores/loadingStore'
-import ToastCom from '@/components/ToastCom.vue';
 import toast from '@/stores/toastStore';
 import axios from 'axios';
 
@@ -10,7 +9,6 @@ export default {
   name: 'BookingStep3',
   components: {
     BookingStep,
-    ToastCom
   },
   data: () => ({
     order: {}
@@ -29,9 +27,6 @@ export default {
         const res = await axios.get(api)
         if (res.data.success == true) {
           this.order = res.data.order;
-          console.log('Successful get order')
-        } else {
-          console.error('Error get order', res.data.message)
         }
       } catch (error) {
         console.error('Error getOrder function', error)
@@ -46,12 +41,10 @@ export default {
         let api = `${import.meta.env.VITE_APP_API}v2/api/${import.meta.env.VITE_APP_PATH}/pay/${this.$route.params.orderId}`;
         const res = await axios.post(api)
         if (res.data.success == true) {
-          console.log('Successful pay order')
           this.toastSuccess('Payment Successful', 'Thank you for your payment!');
           // 更新訂單狀態
           this.getOrder();
         } else {
-          console.error('Error pay order', res.data.message)
           this.toastFailed('Payment Failed', res.data.message);
         }
       } catch (error) {
@@ -68,7 +61,6 @@ export default {
 </script>
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
-  <ToastCom/>
   <main class="booking-step_3">
     <section class="booking-complete">
       <BookingStep :stepActive="3" />

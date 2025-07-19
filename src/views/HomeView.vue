@@ -5,7 +5,6 @@ import HeroCom from '@/components/HeroCom.vue';
 import QuickBooking from '@/components/quickBooking.vue';
 import FeatureCom from '@/components/FeatureCom.vue';
 import RoomCard from '@/components/RoomCard.vue';
-import ToastCom from '@/components/ToastCom.vue';
 
 
 export default {
@@ -15,7 +14,6 @@ export default {
     QuickBooking,
     FeatureCom,
     RoomCard,
-    ToastCom
   },
   computed: {
     ...mapState(loadingStore, ['isloading']),
@@ -28,7 +26,6 @@ export default {
 
 <template>
   <LoadingOverlay :active="isloading"></LoadingOverlay>
-  <ToastCom />
   <main class="home">
     <!-- Hero Section -->
     <HeroCom title="Discover the Enchanting Bali Retreat"

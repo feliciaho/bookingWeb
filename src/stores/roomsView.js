@@ -17,13 +17,10 @@ export default defineStore('roomsView', {
         }
         const res = await axios.get(api)
         if (res.data.success == true) {
-          console.log('Successful get roomsData')
           // 房間資料
           this.roomData = res.data.products
           // 從價錢最少開始排列
           this.roomData.sort((a, b) => a.price - b.price)
-        } else {
-          console.error('Error get roomsData', res.data.message)
         }
       } catch (error) {
         console.error('Error get roomsData function', error)

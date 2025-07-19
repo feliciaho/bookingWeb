@@ -3,6 +3,8 @@
 import { RouterView } from 'vue-router'
 import NavBar from '@/components/NavBar.vue'
 import FooterCom from '@/components/FooterCom.vue';
+import ToastCom from '@/components/ToastCom.vue';
+
 
 export default {
   name: 'App',
@@ -10,14 +12,16 @@ export default {
     NavBar,
     FooterCom,
     RouterView,
+    ToastCom 
   }
 }
 </script>
 
 <template>
   <div id="app">
-    <NavBar/>
-    <router-view/>
-    <FooterCom/>
+    <NavBar />
+    <ToastCom />
+    <router-view />
+    <FooterCom />
   </div>
 </template>

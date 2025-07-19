@@ -1,4 +1,3 @@
-# Options API
 <script>
 export default {
   name: 'NavBar',

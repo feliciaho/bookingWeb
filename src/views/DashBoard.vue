@@ -4,7 +4,6 @@ import modalToggle from '@/stores/modalToggle';
 import loadingStore from '@/stores/loadingStore';
 import dashboard from '@/stores/dashboard';
 import DashboardModal from '@/components/DashboardModal.vue';
-import ToastCom from '@/components/ToastCom.vue';
 import PaginationCom from '@/components/PaginationCom.vue';
 
 
@@ -12,7 +11,6 @@ export default {
   name: 'DashBoard',
   components: {
     DashboardModal,
-    ToastCom,
     PaginationCom
   },
   data: () => ({
@@ -38,10 +36,8 @@ export default {
         const api = `${import.meta.env.VITE_APP_API}v2/api/user/check`
         const res = await this.axios.post(api, this.user)
         if (res.data.success == true) {
-          console.log('Successful setting token');
           this.getRooms();
         } else {
-          console.error('Error setting token:', res.data.message);
           // 如果驗證失敗，則重定向到登入頁面
           this.$router.push('/loginView');
         }
@@ -91,7 +87,6 @@ export default {
 <template>
   <main class="dashboard">
     <LoadingOverlay :active="isloading"></LoadingOverlay>
-    <ToastCom />
     <section class="room-table">
       <DashboardModal />
       <h1 class="room-table_title common-title">Dashboard</h1>

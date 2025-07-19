@@ -4,7 +4,6 @@ import dashboard from '@/stores/dashboard';
 
 export default {
   data: () => ({
-    // pagination: {},
   }),
   computed: {
     ...mapWritableState(dashboard, ['rooms_pagination', 'orders_pagination', 'tabToggle']),

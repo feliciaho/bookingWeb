@@ -15,12 +15,6 @@ export default {
     dateOptions: {
       dateFormat: 'Y-m-d',
       minDate: 'today',
-      // disable: [
-      //   {
-      //     from: '2025-07-01',
-      //     to: '2025-07-05'
-      //   }
-      // ],
     },
   }),
   computed: {

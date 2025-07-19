@@ -7,11 +7,9 @@ export default defineStore('modalToggle',{
   actions:{
     showModal(){
       this.modalToggleSet = true;
-      console.log('Modal is shown');
     },
     closeModal(){
       this.modalToggleSet = false;
-      console.log('Modal is closed');
     },
   }
 })
